@@ -1,0 +1,82 @@
+@charset "utf-8";
+/* CSS Document */
+body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, label, table, tbody, tr, td, img, div, dl, dt, dd, pre, input, select, textarea, fieldset, iframe, hr {
+	margin:0;
+	padding:0
+}
+h1, h2, h3, h4, h5, h6 {
+	font-size:100%
+}
+table {
+	border-collapse:collapse;
+	border-spacing:0
+}
+select, input, textarea {
+	font:normal 12px/normal Tahoma, Arial, Verdana, sans-serif;
+}
+input, select, button {
+	vertical-align:middle
+}
+button {
+	cursor:pointer;
+}
+img {
+	vertical-align:top
+}
+img, a img, fieldset {
+	border:none
+}
+ul, ol {
+	list-style:none
+}
+li {
+	list-style-type:none
+}
+em, i {
+	font-style:normal
+}
+a {
+	text-decoration:none;
+	outline:none;
+	color:#6a7796
+}
+a:hover {
+	text-decoration:underline;
+}
+.center {
+	text-align:center
+}
+.right {
+	text-align:right
+}
+.fl {
+	float:left
+}
+.fr {
+	float:right
+}
+.clear {
+	clear:both;
+	visibility:hidden;
+	font-size:0;
+	line-height:0;
+	height:0
+}
+.clearfix:after {
+	content:'';
+	display:block;
+	clear:both;
+	height:0
+}
+.indent {
+	text-indent:-9999px;
+	overflow:hidden
+}
+.nowrap {
+	display:block;
+	overflow:hidden;
+	white-space:nowrap;
+}
+.block {
+	display:block
+}

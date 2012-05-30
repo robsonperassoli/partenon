@@ -1,0 +1,130 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+    <ui:define name="body">
+        
+        <h:form id="frm" prependId="false">
+            
+            <p:dialog header="Pesquisa de Cidades" widgetVar="dlgCidade">
+                <p:dataTable value="#{cidadeMB.list}" var="cidade"
+                             selectionMode="single"
+                             selection="#{localMB.local.endereco.cidade}"
+                             onRowSelectUpdate="cidade"
+                             onRowSelectComplete="dlgCidade.hide()">
+                    <p:column headerText="ID">
+                        <h:outputText value="#{cidade.cddId}"/>
+                    </p:column>
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{cidade.cddNome}"/>
+                    </p:column>
+                    <p:column headerText="UF">
+                        <h:outputText value="#{cidade.estado.estUf}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:dialog>
+            
+            <p:dialog header="Locais do Evento" widgetVar="dlgLocais" rendered="#{localMB.list.size() > 0}">
+                <p:dataTable value="#{localMB.list}" var="local"
+                             selectionMode="single"
+                             selection="#{localMB.local.lclPai}"
+                             onRowSelectUpdate="local_pai"
+                             onRowSelectComplete="dlgLocais.hide()">
+                    <p:column headerText="ID">
+                        <h:outputText value="#{local.lclId}"/>
+                    </p:column>
+                    <p:column headerText="Descrição">
+                        <h:outputText value="#{local.lclDescricao}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:dialog>
+            
+            <h:panelGrid columns="2" style="width: 100%;" columnClasses="sidebar-modulo,conteudo-modulo">
+               <ui:include src="menu_evento.xhtml" />
+                
+                <h:panelGroup>
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton action="/evento_listar.jsf?faces-redirect=true" image="ui-icon ui-icon-arrowthick-1-w" value="Voltar" />
+                            <p:commandButton action="/evento_dados_gerais.jsf?faces-redirect=true" image="ui-icon ui-icon-plusthick" value="Novo Evento" />
+                            <p:commandButton action="#{localMB.novoLocal()}" oncomplete="dlgNovoLocal.show(); return false;" update="dlgNovoLocalDisplay" image="ui-icon ui-icon-plusthick" value="Novo Local" />
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                    
+                    <p:spacer height="8" />
+                    
+                    <p:fieldset legend="Locais onde o Evento acontecerá">
+                        <p:dataTable value="#{localMB.evento.localList}" var="local">
+                            <p:column headerText="ID">
+                                <h:outputText value="#{local.lclId}" />
+                            </p:column>
+                            <p:column headerText="Descrição">
+                                <h:outputText value="#{local.lclDescricao}" />
+                            </p:column>
+                            <p:column headerText="Rua">
+                                <h:outputText value="#{local.endereco.endRua}" />
+                            </p:column>
+                            <p:column headerText="Cep">
+                                <h:outputText value="#{local.endereco.endCep}" />
+                            </p:column>
+                            <p:column headerText="Cidade">
+                                <h:outputText value="#{local.endereco.cidade.cddNome}" />
+                            </p:column>
+                            <p:column>
+                                <p:commandButton image="ui-icon ui-icon-minusthick" title="Remover Local do Evento" 
+                                                 action="#{localMB.excluir(local)}"
+                                                 update="frm,messages"/>
+                                <p:commandButton image="ui-icon ui-icon-pencil" title="Editar Local" 
+                                                 oncomplete="dlgNovoLocal.show()"
+                                                 update="dlgNovoLocalDisplay">
+                                    <f:setPropertyActionListener target="#{localMB.local}" value="#{local}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </p:fieldset>
+                    
+                </h:panelGroup>
+                
+            </h:panelGrid>
+            <p:dialog header="Novo Local" widgetVar="dlgNovoLocal" width="450">
+                <h:panelGrid columns="2" id="dlgNovoLocalDisplay">
+                    <h:outputLabel value="Local Principal" for="local_pai" rendered="#{localMB.evento.localList.size() > 0}" />
+                    <h:panelGrid columns="2" id="local_pai" rendered="#{localMB.evento.localList.size() > 0}">
+                        <h:outputText value="#{localMB.local.lclPai.lclDescricao}" />
+                        <p:button image="ui-icon ui-icon-search" onclick="dlgLocais.show();return false;" />
+                    </h:panelGrid>
+                    
+                    <h:outputLabel value="Descrição" for="descricao" />
+                    <p:inputText value="#{localMB.local.lclDescricao}" id="descricao" size="60"/>
+                    
+                    <h:outputLabel value="Rua" for="rua" />
+                    <p:inputText value="#{localMB.local.endereco.endRua}" id="rua" size="60"/>
+                    
+                    <h:outputLabel value="Número" for="numero" />
+                    <p:inputText value="#{localMB.local.endereco.endNumero}" id="numero" />
+                    
+                    <h:outputLabel value="Complemento" for="complemento" />
+                    <p:inputText value="#{localMB.local.endereco.endComplemento}" id="complemento" size="60"/>
+                    
+                    <h:outputLabel value="Bairro" for="bairro" />
+                    <p:inputText value="#{localMB.local.endereco.endBairro}" id="bairro" size="30"/>
+                    
+                    <h:outputLabel value="Cep" for="cep" />
+                    <p:inputMask mask="99999-999" value="#{localMB.local.endereco.endCep}" id="cep" size="10"/>
+                    
+                    <h:outputLabel value="Cidade" for="cidade" />
+                    <h:panelGrid columns="2" id="cidade">
+                        <h:outputText value="#{localMB.local.endereco.cidade.cddNome}"/>
+                        <p:button image="ui-icon ui-icon-search" onclick="dlgCidade.show(); return false;" />
+                    </h:panelGrid>
+                    
+                    <p:commandButton value="Inserir" image="ui-icon ui-icon-check" 
+                                     action="#{localMB.salvar()}"
+                                     oncomplete="dlgNovoLocal.hide()"
+                                     update="frm,messages"/>
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

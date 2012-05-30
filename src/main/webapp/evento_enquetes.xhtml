@@ -1,0 +1,134 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+    <ui:define name="body">
+        <script type="text/javascript">
+         var piechartStyle = {
+                 padding:20,
+                 legend: {
+                         display:"right"
+                         ,spacing:10
+                 }
+         };
+        </script>
+        <h:form id="frm">
+            
+            <p:dialog header="Alternativas" widgetVar="dlgAlternativas" width="500">
+                <h:panelGroup id="dlgAlternativasDisplay">
+                    <h:outputLabel value="Descrição" for="descAlt" />
+                    <p:inputText value="#{enqueteMB.novaAlternativa.ealDescricao}" id="descAlt" size="60"/>
+                    <p:commandButton value="Salvar" image="ui-icon ui-icon-check" 
+                                     action="#{enqueteMB.salvarAlternativa()}"
+                                     update="dlgAlternativasDisplay,messages"/>
+                    <p:dataTable value="#{enqueteMB.alternativas}" var="alt" id="listAlternativas">
+                        <p:column  headerText="ID">
+                            <h:outputText value="#{alt.ealId}" />
+                        </p:column>
+                        <p:column  headerText="Descrição">
+                            <h:outputText value="#{alt.ealDescricao}" />
+                        </p:column>
+                        <p:column  headerText="Respostas">
+                            <h:outputText value="#{alt.ealRespostas}" />
+                        </p:column>
+                        <p:column>
+                            <p:commandButton image="ui-icon ui-icon-pencil" update=":frm:dlgAlternativasDisplay,messages">
+                                <f:setPropertyActionListener target="#{enqueteMB.novaAlternativa}" value="#{alt}" />
+                            </p:commandButton>
+                            <p:commandButton image="ui-icon ui-icon-close" update=":frm:dlgAlternativasDisplay,messages"
+                                             action="#{enqueteMB.excluirAlternativa()}">
+                                <f:setPropertyActionListener target="#{enqueteMB.novaAlternativa}" value="#{alt}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                    <p:pieChart id="graficoRespostas" value="#{enqueteMB.alternativas}" var="alternativa" 
+                                categoryField="#{alternativa.ealDescricao}" 
+                                dataField="#{alternativa.ealRespostas}"  
+                                style="piechartStyle"/>
+                </h:panelGroup>
+            </p:dialog>
+            <p:dialog header="Nova Enquete" widgetVar="dlgNovaEnquete" width="500">
+                <h:panelGrid columns="2" id="dlgNovaEnqueteDisplay">
+                    <h:outputLabel value="ID" for="id" />
+                    <h:outputText value="#{enqueteMB.enquete.enqId}" id="id" />
+
+                    <h:outputLabel value="Descrição" for="desc" />
+                    <p:inputText value="#{enqueteMB.enquete.enqDescricao}" id="desc" size="60"/>
+
+                    <h:outputLabel value="Início" for="inicio" />
+                    <p:calendar value="#{enqueteMB.enquete.enqInicio}" id="inicio" pattern="dd/MM/yyyy"/>
+
+                    <h:outputLabel value="Expiração" for="expiracao" />
+                    <p:calendar value="#{enqueteMB.enquete.enqExpiracao}" id="expiracao" pattern="dd/MM/yyyy"/>
+
+                    <p:spacer height="8" style="display:block;"/>
+
+                    <p:commandButton value="Salvar" image="ui-icon ui-icon-check" 
+                                     action="#{enqueteMB.salvar()}"
+                                     oncomplete="dlgNovaEnquete.hide()"
+                                     update=":frm,messages"/>
+                </h:panelGrid>
+            </p:dialog>
+            <h:panelGrid columns="2" style="width: 100%;" columnClasses="sidebar-modulo,conteudo-modulo">
+                <ui:include src="menu_evento.xhtml" />
+
+                <h:panelGroup>
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton action="/evento_listar.jsf?faces-redirect=true" image="ui-icon ui-icon-arrowthick-1-w" value="Voltar" />
+                            <p:commandButton action="/evento_dados_gerais.jsf?faces-redirect=true" image="ui-icon ui-icon-plusthick" value="Novo Evento" />
+                            <p:commandButton value="Nova Enquete" action="#{enqueteMB.novaEnquete()}" oncomplete="dlgNovaEnquete.show();" 
+                                             image="ui-icon ui-icon-plusthick" update=":frm:dlgNovaEnqueteDisplay" />
+                        </p:toolbarGroup>
+                    </p:toolbar>
+
+                    <p:spacer height="8" />
+
+                    <p:fieldset legend="Enquetes">
+                        <p:dataTable value="#{enqueteMB.list}" var="enquete">
+                            <p:column headerText="ID">
+                                <h:outputText value="#{enquete.enqId}" />
+                            </p:column>
+                            <p:column headerText="Descrição">
+                                <h:outputText value="#{enquete.enqDescricao}" />
+                            </p:column>
+                            <p:column headerText="Início">
+                                <h:outputText value="#{enquete.enqInicio}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Expiração">
+                                <h:outputText value="#{enquete.enqExpiracao}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <p:commandButton image="ui-icon ui-icon-minusthick" action="#{enqueteMB.excluir()}" 
+                                                 update="frm,messages"
+                                                 title="Remover Enquete">
+                                    <f:setPropertyActionListener target="#{enqueteMB.enquete}" value="#{enquete}" />
+                                </p:commandButton>
+                                <p:commandButton image="ui-icon ui-icon-pencil" 
+                                                 update=":frm:dlgNovaEnqueteDisplay,messages"
+                                                 oncomplete="dlgNovaEnquete.show();"
+                                                 title="Editar Enquete">
+                                    <f:setPropertyActionListener target="#{enqueteMB.enquete}" value="#{enquete}" />
+                                </p:commandButton>
+                                <p:commandButton image="ui-icon ui-icon-comment" 
+                                                 action="#{enqueteMB.addAlternativas()}"
+                                                 oncomplete="dlgAlternativas.show()"
+                                                 update=":frm:dlgAlternativasDisplay,messages"
+                                                 title="Alternativas">
+                                    <f:setPropertyActionListener target="#{enqueteMB.enquete}" value="#{enquete}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </p:fieldset>
+
+                </h:panelGroup>
+
+            </h:panelGrid>
+
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,41 @@
+<html xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <f:view contentType="text/html" locale="#currentLocale" />
+    <h:head>
+        <title>Partenon - Gestão Integrada de Eventos</title>
+        <link rel="stylesheet" href="css/default.css" type="text/css" />
+    </h:head>
+
+    <h:body style="background-color:#f1f1f1; background-image:url(images/stripes.gif)">
+        <table style="width: 100%">
+            <tr>
+                <td style="width: 110px;"><p:graphicImage url="images/logo_sistema.png" /></td>
+                <td ><ui:include src="/menu.xhtml" /></td>
+            </tr>
+            <tr valign="top">
+                <td height="400" colspan="2"><ui:insert name="body" /></td>
+            </tr>
+            <tr align="center">
+                <td height="20" colspan="2" align="center" class="text-input">Partenon ${version} @ 2012</td>
+            </tr>
+        </table>
+
+        <p:growl id="messages" globalOnly="true" />
+
+        <p:ajaxStatus style="width:16px;height:16px;">
+            <f:facet name="start">
+                <p:dialog visible="true" resizable="false" closable="false"
+                          showEffect="fade">
+                    <h:graphicImage url="images/carregando.gif" style="vertical-align: middle;"/>
+                    <h:outputText value="Carregando..." />
+
+                </p:dialog>
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>
+    </h:body>
+</html>

@@ -1,0 +1,25 @@
+<ui:composition xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/template/site.xhtml">
+    <ui:define name="content">
+        <div id="blog-page" class="container clearfix">
+            <div class="main-con">
+                <div class="title-nav">
+                    <h2><h:outputText value="#{siteMB.pagina.pgnTituloMenu}"/></h2>
+                </div>
+                <ul class="blog-list">
+                    <li>
+<!--                        <h3><h:outputText value="#{siteMB.pagina.pgnTituloMenu}"/></h3>-->
+<!--                        <div class="author">Posted in: <a href="#">Photography</a> on Tuesday, April 12th, 2010</div>-->
+<!--                        <div class="pic"><img src="image/temp4.jpg" alt="" /></div>-->
+                        <div class="con">
+                            <h:outputText value="#{siteMB.pagina.pgnConteudo}" escape="false"/>
+                        </div>
+<!--                        <div class="clearfix"><span class="tags">Tags: <a href="#">Beach</a>, <a href="#">Vacations</a>, <a href="#">Ocean</a>, <a href="#">Sea</a></span><a href="#" class="btn">23 Comments</a> </div>-->
+                    </li>
+                </ul>
+            </div>
+        </div>
+            
+    </ui:define>
+</ui:composition>

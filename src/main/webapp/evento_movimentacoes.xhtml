@@ -1,0 +1,88 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+    <ui:define name="body">
+        
+        <h:form id="frm" prependId="false">
+            
+            <h:panelGrid columns="2" style="width: 100%;" columnClasses="sidebar-modulo,conteudo-modulo">
+               <ui:include src="menu_evento.xhtml" />
+                
+                <h:panelGroup>
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton action="/evento_listar.jsf?faces-redirect=true" image="ui-icon ui-icon-arrowthick-1-w" value="Voltar" />
+                            <p:commandButton action="/evento_dados_gerais.jsf?faces-redirect=true" image="ui-icon ui-icon-plusthick" value="Novo Evento" />
+                            <p:commandButton action="#{movimentacaoMB.novaMovimentacao()}" oncomplete="dlgNovaMovimentacao.show()" update="dlgNovaMovimentacaoDisplay"  image="ui-icon ui-icon-plusthick" value="Nova Movimentação" />
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                    
+                    <p:spacer height="8" />
+                    
+                    <p:fieldset legend="Movimentações Financeiras">
+                        <p:dataTable value="#{movimentacaoMB.list}" var="mov" rowStyleClass="#{mov.mvmTipo}">
+                            <p:column headerText="ID">
+                                <h:outputText value="#{mov.mvmId}" />
+                            </p:column>
+                            <p:column headerText="Descrição">
+                                <h:outputText value="#{mov.mvmDescricao}" />
+                            </p:column>
+                            <p:column headerText="Data">
+                                <h:outputText value="#{mov.mvmData}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Tipo">
+                                <h:outputText value="#{mov.mvmTipo}" />
+                            </p:column>
+                            <p:column headerText="Valor">
+                                <h:outputText value="#{mov.mvmValor}" />
+                            </p:column>
+                            <p:column>
+                                <p:commandButton image="ui-icon ui-icon-minusthick" title="Remover Movimentação" 
+                                                 action="#{movimentacaoMB.excluir(mov)}"
+                                                 update="frm,messages"/>
+                                <p:commandButton image="ui-icon ui-icon-pencil" title="Editar Movimentação" 
+                                                 oncomplete="dlgNovaMovimentacao.show()"
+                                                 update="dlgNovaMovimentacaoDisplay">
+                                    <f:setPropertyActionListener target="#{movimentacaoMB.movimentacao}" value="#{mov}" />
+                                </p:commandButton>
+                            </p:column>
+                            <f:facet name="footer">
+                                <h:outputText value="Entradas: ${movimentacaoMB.totalTipo('E')} Saídas: ${movimentacaoMB.totalTipo('S')} Saldo: ${movimentacaoMB.total}" />
+                            </f:facet>
+                        </p:dataTable>
+                    </p:fieldset>
+                    
+                </h:panelGroup>
+                
+            </h:panelGrid>
+            <p:dialog header="Nova Movimentação" widgetVar="dlgNovaMovimentacao" width="450">
+                <h:panelGrid columns="2" id="dlgNovaMovimentacaoDisplay">
+                    
+                    <h:outputLabel value="Descrição" for="descricao" />
+                    <p:inputText value="#{movimentacaoMB.movimentacao.mvmDescricao}" id="descricao" size="50"/>
+                    
+                    <h:outputLabel value="Data" for="data" />
+                    <p:calendar value="#{movimentacaoMB.movimentacao.mvmData}" id="data" size="10" pattern="dd/MM/yyyy"/>
+                    
+                    <h:outputLabel value="Tipo" for="tipo" />
+                    <h:selectOneMenu value="#{movimentacaoMB.movimentacao.mvmTipo}" id="tipo">
+                        <f:selectItem itemValue="E" itemLabel="Entrada" />
+                        <f:selectItem itemValue="S" itemLabel="Saída" />
+                    </h:selectOneMenu>
+                    
+                    <h:outputLabel value="Valor" for="valor" />
+                    <p:inputText value="#{movimentacaoMB.movimentacao.mvmValor}" id="valor" size="15" style="text-align: right;"/>
+                    
+                    <p:commandButton value="Salvar" image="ui-icon ui-icon-check" 
+                                     action="#{movimentacaoMB.salvar()}"
+                                     oncomplete="dlgNovaMovimentacao.hide()"
+                                     update="frm,messages"/>
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+    <ui:define name="body">
+        <h:form id="frm">
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton action="/evento_dados_gerais.jsf?faces-redirect=true" image="ui-icon ui-icon-plusthick" value="Novo Evento" />
+                </p:toolbarGroup>
+            </p:toolbar>
+            
+            <p:dataTable value="#{eventoMB.list}" var="evento"
+                         selectionMode="single"
+                         rowSelectListener="#{eventoMB.handleSelect}">
+                <p:column headerText="Id">
+                    <h:outputText value="#{evento.evtId}" />
+                </p:column>
+                <p:column headerText="Descrição">
+                    <h:outputText value="#{evento.evtDescricao}" />
+                </p:column>
+
+                <p:column headerText="Início">
+                    <h:outputText value="#{evento.evtInicio}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="Término">
+                    <h:outputText value="#{evento.evtFim}" >
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                </p:column>
+                
+                <p:column>
+                    <p:commandButton image="ui-icon ui-icon-minusthick" 
+                                     action="#{eventoMB.excluir(evento)}"
+                                     update="frm,messages"/>
+                </p:column>
+            </p:dataTable>
+
+        </h:form>
+    </ui:define>
+</ui:composition>

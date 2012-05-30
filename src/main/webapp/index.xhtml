@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+    <ui:define name="body">
+        <h:form id="frm" style="margin: auto; width: 704px;">
+            <p:graphicImage url="images/partenon-background.png" style="display: block; margin: auto; margin-top: 30px; margin-bottom: 30px;"/>
+            <p:panel>
+                <h:panelGrid columns="6" width="100%">
+                    <h:outputLink value="evento_dados_gerais.jsf" styleClass="linkInicial">
+                        <p:graphicImage url="images/48px/novo-evento.png" />
+                        Novo Evento
+                    </h:outputLink>
+
+                    <h:outputLink value="entidade_dados_gerais.jsf" styleClass="linkInicial">
+                        <p:graphicImage url="images/48px/nova-entidade.png" />
+                        Nova Entidade
+                    </h:outputLink>
+
+                    <h:outputLink value="insumo_adicionar.jsf" styleClass="linkInicial">
+                        <p:graphicImage url="images/48px/novo-insumo.png" />
+                        Novo Insumo
+                    </h:outputLink>
+
+                    <h:outputLink value="usuario_listar.jsf" styleClass="linkInicial">
+                        <p:graphicImage url="images/48px/usuarios.png" />
+                        Usuários
+                    </h:outputLink>
+
+                    <h:outputLink value="configuracao.jsf" styleClass="linkInicial">
+                        <p:graphicImage url="images/48px/config.png" />
+                        Configuração
+                    </h:outputLink>
+
+                    <p:commandLink action="#{securityContext.logout()}" ajax="false" styleClass="linkInicial">
+                        <p:graphicImage url="images/48px/sair.png" />
+                        Sair
+                    </p:commandLink>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

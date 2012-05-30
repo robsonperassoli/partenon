@@ -1,0 +1,26 @@
+<ui:composition xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/template/site.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <ui:define name="content">
+        <div id="portfolio-page" class="container">
+            <div class="main-con">
+                <div class="title-nav">
+                    <h2>Galerias</h2>
+<!--                    <a href="#" class="btn-add"></a> <a href="#" class="btn-workcategory">Work Category</a> -->
+                </div>
+                <ul class="lista-galeria clearfix">
+                    <c:forEach items="#{siteMB.galerias}" var="galeria">
+                        <li>
+                            <h:outputLink value="#{facesContext.externalContext.request.contextPath}/site/#{siteMB.bean.sitSlugUrl}/galeria/#{galeria.galId}">
+                                #{galeria.galDescricao}
+                            </h:outputLink>
+                        </li>
+                    </c:forEach>
+                    
+                </ul>
+<!--                <div class="pages-nav"><a href="#" class="previous">« Previous Page</a><div class="pages"><a href="#">1</a><a href="#">2</a><a href="#">3</a><a href="#">4</a><a href="#">5</a></div><a href="#" class="next">Next Page »</a></div>-->
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

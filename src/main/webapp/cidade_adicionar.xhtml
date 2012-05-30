@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+    <ui:define name="body">
+        <h:form id="frm">
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="Voltar" action="/cidade_listar.jsf?faces-redirect=true" ajax="false" image="ui-icon ui-icon-arrowthick-1-w"/>
+                    <p:commandButton value="Salvar" action="#{cidadeMB.salvar()}" image="ui-icon ui-icon-disk" update="messages, frm"/>
+                    <p:commandButton value="Excluir" action="#{cidadeMB.excluir()}" image="ui-icon ui-icon-minusthick" update="messages, frm"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+            
+            <p:dialog header="Estados" widgetVar="dlgCidadeEstado" 
+                      modal="true" closable="true">
+                <p:dataTable value="#{estadoMB.list}" var="est"
+                             selectionMode="single"
+                             selection="#{cidadeMB.bean.estado}"
+                             onRowSelectUpdate="estado"
+                             onselectComplete="dlgCidadeEstado.hide()">
+                    <p:column headerText="UF">
+                        <h:outputText value="#{est.estUf}"/>
+                    </p:column>
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{est.estNome}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:dialog>
+            
+            <p:panel>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="ID" for="id"/>
+                    <p:inputText value="#{cidadeMB.bean.cddId}" id="id" disabled="true" />
+                    
+                    <h:outputLabel value="Nome" for="nome"/>
+                    <p:inputText value="#{cidadeMB.bean.cddNome}" id="nome" />
+       
+                    <h:outputLabel value="Estado" for="estado"/>
+                    <h:panelGrid columns="2" id="estado">
+                        <h:outputText value="#{cidadeMB.bean.estado.estUf}" />
+                        <p:button image="ui-icon ui-icon-search" onclick="dlgCidadeEstado.show(); return false;" />                        
+                    </h:panelGrid>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

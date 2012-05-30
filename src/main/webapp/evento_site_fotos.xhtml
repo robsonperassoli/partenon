@@ -1,0 +1,72 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+    <ui:define name="body">
+        <h:form id="frm" prependId="false">
+            <p:dialog header="Adicionar Descrição" widgetVar="dlgDescricao" width="500">
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Descrição" for="descricao" />
+                    <p:inputText value="#{fotoMB.foto.fotDescricao}" id="descricao" size="60"/>
+                </h:panelGrid>
+                <p:spacer height="8" style="display:block;"/>
+
+                <p:commandButton value="Salvar" image="ui-icon ui-icon-check" 
+                                 action="#{fotoMB.salvar()}"
+                                 oncomplete="dlgDescricao.hide()"
+                                 update="frm,messages"/>
+            </p:dialog>
+            
+            <h:panelGrid columns="2" style="width: 100%;" columnClasses="sidebar-modulo,conteudo-modulo">
+                <ui:include src="menu_evento.xhtml" />
+
+                <h:panelGroup>
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton action="/evento_listar.jsf?faces-redirect=true" image="ui-icon ui-icon-arrowthick-1-w" value="Voltar" />
+                            <p:commandButton action="/evento_dados_gerais.jsf?faces-redirect=true" image="ui-icon ui-icon-plusthick" value="Novo Evento" />
+                            <p:commandButton value="Visualizar Galerias" image="ui-icon ui-icon-home" action="#{fotoMB.visualizarGaleria()}"/>
+                        </p:toolbarGroup>
+                    </p:toolbar>
+
+                    <p:spacer height="8" />
+
+                    <p:fieldset legend="Fotos da Galeria: #{fotoMB.galeria.galDescricao}">
+                        
+                        <p:fileUpload fileUploadListener="#{fotoMB.handleUpload}" 
+                                      multiple="true"
+                                      label="Procurar Imagens..." 
+                                      allowTypes="*.jpg;*.bmp;*.png;*.gif" 
+                                      description="Selecione as Imagens"
+                                      update="listFotos"/>
+
+                        
+                        <p:dataTable value="#{fotoMB.list}" var="foto" id="listFotos">
+                            <p:column headerText="ID">
+                                <h:outputText value="#{foto.fotId}" />
+                            </p:column>
+                            <p:column headerText="Miniatura">
+                                <p:graphicImage url="images/thumbnails/#{foto.fotNome}" />
+                            </p:column>
+                            <p:column headerText="Descrição">
+                                <h:outputText value="#{foto.fotDescricao}" />
+                            </p:column>
+                            <p:column>
+                                <p:commandButton image="ui-icon ui-icon-pencil" oncomplete="dlgDescricao.show()"
+                                                 update="dlgDescricaoDisplay">
+                                    <f:setPropertyActionListener target="#{fotoMB.foto}" value="#{foto}" />
+                                </p:commandButton>
+                                <p:commandButton image="ui-icon ui-icon-minusthick" action="#{fotoMB.excluir(foto)}" 
+                                                 update="frm,messages"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:fieldset>
+
+                </h:panelGroup>
+
+            </h:panelGrid>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

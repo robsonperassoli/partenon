@@ -1,0 +1,70 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+    <ui:define name="body">
+        <h:form id="frm">
+            <p:dialog header="Nova Galeria" widgetVar="dlgNovaGaleria" width="500">
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Descrição" for="descricao" />
+                    <p:inputText value="#{galeriaMB.galeria.galDescricao}" id="descricao" size="60"/>
+
+                    <h:outputLabel value="Data" for="data" />
+                    <h:outputText value="#{galeriaMB.galeria.galData}" id="data">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                </h:panelGrid>
+                <p:spacer height="8" style="display:block;"/>
+
+                <p:commandButton value="Salvar" image="ui-icon ui-icon-check" 
+                                 action="#{galeriaMB.salvar()}"
+                                 oncomplete="dlgNovaGaleria.hide()"
+                                 update="frm,messages"/>
+            </p:dialog>
+
+            <h:panelGrid columns="2" style="width: 100%;" columnClasses="sidebar-modulo,conteudo-modulo">
+                <ui:include src="menu_evento.xhtml" />
+
+                <h:panelGroup>
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton action="/evento_listar.jsf?faces-redirect=true" image="ui-icon ui-icon-arrowthick-1-w" value="Voltar" />
+                            <p:commandButton action="/evento_dados_gerais.jsf?faces-redirect=true" image="ui-icon ui-icon-plusthick" value="Novo Evento" />
+                            <p:button value="Nova Galeria" onclick="dlgNovaGaleria.show(); return false;" image="ui-icon ui-icon-plusthick"/>
+                        </p:toolbarGroup>
+                    </p:toolbar>
+
+                    <p:spacer height="8" />
+
+                    <p:fieldset legend="Galerias cadastrados neste Site">
+                        <p:dataTable value="#{galeriaMB.list}" var="galeria">
+                            <p:column headerText="ID">
+                                <h:outputText value="#{galeria.galId}" />
+                            </p:column>
+                            <p:column headerText="Descrição">
+                                <h:outputText value="#{galeria.galDescricao}" />
+                            </p:column>
+                            <p:column headerText="Data">
+                                <h:outputText value="#{galeria.galData}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <p:commandButton image="ui-icon ui-icon-image" 
+                                                 action="#{galeriaMB.adicionarFotos(galeria)}" 
+                                                 title="Fotos desta Galeria"/>
+                                <p:commandButton image="ui-icon ui-icon-minusthick" action="#{galeriaMB.excluir(galeria)}" 
+                                                 update="frm,messages"
+                                                 title="Remover Galerias"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:fieldset>
+
+                </h:panelGroup>
+
+            </h:panelGrid>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

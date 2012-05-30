@@ -1,0 +1,118 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+    <ui:define name="body">
+        <h:form id="frm">
+            <p:dialog header="Nova Programação" widgetVar="dlgNovaProgramacao" width="400">
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Nome" for="nome" />
+                    <p:inputText value="#{eventoMB.novaProgramacao.prmNome}" id="nome" size="60" />
+                    
+                    <h:outputLabel value="Preço" for="preco" />
+                    <p:inputText value="#{eventoMB.novaProgramacao.prmPreco}" id="preco" size="10"/>
+                </h:panelGrid>
+                
+                <p:spacer height="8" />
+                
+                <p:fieldset legend="Programas desta programação">
+                    <h:outputLabel value="Descr." for="descricao"/><p:spacer width="4" />
+                    <p:inputText value="#{eventoMB.novoPrograma.prgDescricao}" id="descricao" size="43"/>
+                    <p:commandButton value="Ok" image="ui-icon ui-icon-check" action="#{eventoMB.adicionarProgramaParaProgramacao()}"
+                                     update="descricao,dtbPrograma"/>
+                    <p:spacer height="5" />
+                    <p:dataTable value="#{eventoMB.novaProgramacao.programaList}" var="programa" id="dtbPrograma">
+                        <p:column headerText="ID">
+                            <h:outputText value="#{programa.prgId}"/>
+                        </p:column>
+                        <p:column headerText="Descrição">
+                            <h:outputText value="#{programa.prgDescricao}"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:fieldset>
+                
+                <p:spacer height="8" />
+                
+                <p:fieldset legend="Locais onde esta programação acontecerá">
+                    <h:outputLabel value="Local" for="local"/><p:spacer width="4" />
+                    <p:button image="ui-icon ui-icon-search" onclick="dlgLocais.show(); return false;"/>
+                    <h:outputText value="#{eventoMB.novoLocalProgramacao.lclDescricao}" id="local" style="width:150px;" />
+                    <p:commandButton value="Ok" image="ui-icon ui-icon-check" action="#{eventoMB.adicionarLocalParaProgramacao()}"
+                                     update="local,dtbLocalProgramacao"/>
+                    
+                    <p:spacer height="5" style="display:block;" />
+                    
+                    <p:dataTable value="#{eventoMB.novaProgramacao.localProgramacaoList}" var="localProgramacao"
+                                 id="dtbLocalProgramacao">
+                        <p:column headerText="ID">
+                            <h:outputText value="#{localProgramacao.local.lclId}"/>
+                        </p:column>
+                        <p:column headerText="Descrição">
+                            <h:outputText value="#{localProgramacao.local.lclDescricao}"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:fieldset>
+                
+                <p:spacer height="8" style="display:block;"/>
+                
+                <p:commandButton value="Inserir" image="ui-icon ui-icon-check" 
+                                 action="#{eventoMB.adicionarProgramacao()}"
+                                 oncomplete="dlgNovaProgramacao.hide()"
+                                 update="frm,messages"/>
+            </p:dialog>
+            
+            <p:dialog header="Locais do Evento" widgetVar="dlgLocais" rendered="#{eventoMB.bean.localList.size() > 0}">
+                <p:dataTable value="#{eventoMB.bean.localList}" var="local"
+                             selectionMode="single"
+                             selection="#{eventoMB.novoLocalProgramacao}"
+                             onRowSelectUpdate="local"
+                             onRowSelectComplete="dlgLocais.hide()">
+                    <p:column headerText="ID">
+                        <h:outputText value="#{local.lclId}"/>
+                    </p:column>
+                    <p:column headerText="Descrição">
+                        <h:outputText value="#{local.lclDescricao}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:dialog>
+            
+            <h:panelGrid columns="2" style="width: 100%;" columnClasses="sidebar-modulo,conteudo-modulo">
+                <ui:include src="menu_evento.xhtml" />
+                
+                <h:panelGroup>
+                   <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton action="/evento_listar.jsf?faces-redirect=true" image="ui-icon ui-icon-arrowthick-1-w" value="Voltar" />
+                            <p:commandButton action="/evento_dados_gerais.jsf?faces-redirect=true" image="ui-icon ui-icon-plusthick" value="Novo Evento" />
+                            <p:button value="Nova Programação" onclick="dlgNovaProgramacao.show(); return false;" image="ui-icon ui-icon-plusthick"/>
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                    
+                    <p:spacer height="8" />
+                    
+                    <p:fieldset legend="Programações do Evento">
+                        <p:dataTable value="#{eventoMB.bean.programacaoList}" var="programacao">
+                            <p:column headerText="ID">
+                                <h:outputText value="#{programacao.prmId}" />
+                            </p:column>
+                            <p:column headerText="Nome">
+                                <h:outputText value="#{programacao.prmNome}" />
+                            </p:column>
+                            <p:column headerText="Preço">
+                                <h:outputText value="#{programacao.prmPreco}" />
+                            </p:column>
+                            <p:column>
+                                <p:commandButton image="ui-icon ui-icon-minusthick" action="#{eventoMB.removerProgramacao(programacao)}" 
+                                                 update="frm,messages"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:fieldset>
+                    
+                </h:panelGroup>
+                
+            </h:panelGrid>
+            
+        </h:form>
+    </ui:define>
+
+</ui:composition>

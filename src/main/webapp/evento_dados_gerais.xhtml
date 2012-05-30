@@ -1,0 +1,96 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+    <ui:define name="body">
+        <h:form id="frm">
+            
+            <p:dialog header="Pesquisa de Cidades" widgetVar="dlgCidade">
+                <p:dataTable value="#{cidadeMB.list}" var="cidade"
+                             selectionMode="single"
+                             selection="#{eventoMB.bean.local.endereco.cidade}"
+                             onRowSelectUpdate="cidade"
+                             onRowSelectComplete="dlgCidade.hide()">
+                    <p:column headerText="ID">
+                        <h:outputText value="#{cidade.cddId}"/>
+                    </p:column>
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{cidade.cddNome}"/>
+                    </p:column>
+                    <p:column headerText="UF">
+                        <h:outputText value="#{cidade.estado.estUf}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:dialog>
+            
+            <h:panelGrid columns="2" style="width: 100%;" columnClasses="sidebar-modulo,conteudo-modulo">
+                <ui:include src="menu_evento.xhtml" />
+                
+                <h:panelGroup>
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton action="/evento_listar.jsf?faces-redirect=true" image="ui-icon ui-icon-arrowthick-1-w" value="Voltar" />
+                            <p:commandButton value="Salvar" image="ui-icon ui-icon-disk" action="#{eventoMB.salvar()}" update="frm,messages" />
+                            <p:commandButton action="/evento_dados_gerais.jsf?faces-redirect=true" image="ui-icon ui-icon-plusthick" value="Novo Evento" />
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                    
+                    <p:spacer height="8" />
+                    
+                    <p:fieldset legend="Dados do Evento">
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Nome" for="nome"/>
+                            <p:inputText value="#{eventoMB.bean.evtNome}" id="nome" size="70" />
+
+                            <h:outputLabel value="Descrição" for="descricao"/>
+                            <p:inputText value="#{eventoMB.bean.evtDescricao}" id="descricao" size="90" />
+                            
+                            <h:outputLabel value="Período" for="periodo"/>
+                            <h:panelGrid columns="4" id="periodo">
+                                <h:outputLabel value="Início" for="inicio" />
+                                <p:calendar pattern="dd/MM/yyyy" value="#{eventoMB.bean.evtInicio}" id="inicio" size="10"/>
+                                
+                                <h:outputLabel value="Término" for="fim" />
+                                <p:calendar pattern="dd/MM/yyyy" value="#{eventoMB.bean.evtFim}" id="fim" size="10"/>
+                            </h:panelGrid>
+                            
+                        </h:panelGrid>
+                    </p:fieldset>
+                    
+                    <p:spacer height="8" />
+                    
+                    <p:fieldset legend="Local Sede do Evento">
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Descrição" for="local_descricao" />
+                            <p:inputText value="#{eventoMB.bean.local.lclDescricao}" id="local_descricao" size="60"/>
+                            
+                            <h:outputLabel value="Rua" for="rua" />
+                            <p:inputText value="#{eventoMB.bean.local.endereco.endRua}" id="rua" size="60"/>
+                            
+                            <h:outputLabel value="Número" for="numero" />
+                            <p:inputText value="#{eventoMB.bean.local.endereco.endNumero}" id="numero" size="20"/>
+                            
+                            <h:outputLabel value="Complemento" for="complemento" />
+                            <p:inputText value="#{eventoMB.bean.local.endereco.endComplemento}" id="complemento" size="50" />
+                            
+                            <h:outputLabel value="Bairro" for="bairro" />
+                            <p:inputText value="#{eventoMB.bean.local.endereco.endBairro}" id="bairro" size="30" />
+                            
+                            <h:outputLabel value="Cep" for="cep" />
+                            <p:inputMask mask="99999-999" value="#{eventoMB.bean.local.endereco.endCep}" id="cep" size="10"/>
+                            
+                            <h:outputLabel value="Cidade" for="cidade" />
+                            <h:panelGrid columns="2" id="cidade">
+                                <h:outputText value="#{eventoMB.bean.local.endereco.cidade.cddNome}"  />
+                                <p:button image="ui-icon ui-icon-search" onclick="dlgCidade.show(); return false;" />
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </p:fieldset>
+                </h:panelGroup>
+                
+            </h:panelGrid>
+            
+        </h:form>
+    </ui:define>
+
+</ui:composition>

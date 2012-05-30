@@ -1,0 +1,25 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+    <ui:define name="body">
+        <h:form>
+            <p:panel>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Servidor SMTP" for="smtpServer"/>
+                    <p:inputText value="#{configuracaoMB.bean.conSmtpServer}" id="smtpServer" size="60" />
+
+                    <h:outputLabel value="Usuário SMTP" for="smtpUser"/>
+                    <p:inputText value="#{configuracaoMB.bean.conSmtpUser}" id="smtpUser" size="25"/>
+
+                    <h:outputLabel value="Senha SMTP" for="smtpPassword"/>
+                    <p:inputText value="#{configuracaoMB.bean.conSmtpPassword}" id="smtpPassword" size="25" />
+
+                    <p:commandButton image="ui-icon ui-icon-disk" value="Salvar" update="messages,frm" 
+                                     actionListener="#{configuracaoMB.salvar()}"/>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

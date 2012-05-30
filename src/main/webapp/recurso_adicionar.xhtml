@@ -1,0 +1,38 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+    <ui:define name="body">
+        <h:form id="frm">
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="Voltar" action="/recurso_listar.jsf?faces-redirect=true" ajax="false" image="ui-icon ui-icon-arrowthick-1-w"/>
+                    <p:commandButton value="Salvar" action="#{recursoMB.salvar()}" image="ui-icon ui-icon-disk" update="messages, frm"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+            
+            <p:panel>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="ID" for="id"/>
+                    <p:inputText value="#{recursoMB.bean.recId}" id="id" />
+                    
+                    <h:outputLabel value="Descrição" for="descricao"/>
+                    <p:inputText value="#{recursoMB.bean.recDescricao}" id="descricao" />
+                </h:panelGrid>
+                
+                <p:dataTable value="#{recursoMB.bean.listOperacoes}" var="operacao">
+                    <f:facet name="header">
+                        <h:outputLabel value="Adicionar Operação" for="operacao" />
+                        <p:inputText value="#{recursoMB.operacao.opeDescricao}" id="operacao" />
+                        <p:commandButton value="Adicionar Operação" image="ui-icon ui-icon-check" action="#{recursoMB.adicionarOperacao()}"
+                                         update="frm,messages" />
+                    </f:facet>
+                    <p:column headerText="Nome da Operação">
+                        <h:outputText value="#{operacao.opeDescricao}" />
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

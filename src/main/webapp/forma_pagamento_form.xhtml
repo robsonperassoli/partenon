@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./template/main.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui">
+
+    <ui:define name="body">
+        <h:form id="frm">
+            <h:panelGrid columns="2">
+                <h:outputLabel value="ID" for="id" />
+                <h:outputText value="#{formaPagamentoMB.forma.id}" id="id" />
+                
+                <h:outputLabel value="Descrição" for="descricao" />
+                <p:inputText value="#{formaPagamentoMB.forma.descricao}" id="descricao" />
+                
+                <p:commandButton value="Salvar" action="#{formaPagamentoMB.salvar()}" image="ui-icon ui-icon-disk" update="frm,messages" ajax="false" />
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

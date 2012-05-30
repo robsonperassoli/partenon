@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+    <ui:define name="body">
+        <h:form id="frm">
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="Voltar" action="/usuario_grupo_listar.jsf?faces-redirect=true" ajax="false" image="ui-icon ui-icon-arrowthick-1-w"/>
+                    <p:commandButton value="Salvar" action="#{usuarioGrupoMB.salvar()}" image="ui-icon ui-icon-disk" update="messages, frm"/>
+                    <p:button value="Adicionar Operações" image="ui-icon ui-icon-document" onclick="dlgOperacao.show(); return false;"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+            
+            <p:dialog header="Operações do sistema" widgetVar="dlgOperacao">
+                <p:dataTable value="#{operacaoMB.list}" var="operacao"
+                             selectionMode="single"
+                             rowSelectListener="#{usuarioGrupoMB.adicionaOperacao}"
+                             onRowSelectUpdate="frm"
+                             onRowSelectComplete="dlgOperacao.hide()">
+                    <p:column headerText="ID">
+                        <h:outputText value="#{operacao.opeId}" />
+                    </p:column>
+                    <p:column headerText="Descrição">
+                        <h:outputText value="#{operacao.opeDescricao}" />
+                    </p:column>    
+                    <p:column headerText="Recurso">
+                        <h:outputText value="#{operacao.recurso.recDescricao}" />
+                    </p:column>    
+                </p:dataTable>
+            </p:dialog>
+                
+            
+            <p:panel header="Cadastro de Grupos de usuários">
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="ID" for="id"/>
+                    <h:outputText value="#{usuarioGrupoMB.bean.usgId}" id="id" />
+                    
+                    <h:outputLabel value="Nome do Grupo" for="nome"/>
+                    <p:inputText value="#{usuarioGrupoMB.bean.usgNome}" id="nome" />
+                </h:panelGrid>
+                
+                <p:dataTable value="#{usuarioGrupoMB.bean.listOperacoes}" var="operacao" id="dtbOperacoes">
+                    <p:column headerText="ID">
+                        <h:outputText value="#{operacao.opeId}" />
+                    </p:column>
+                    <p:column headerText="Descrição">
+                        <h:outputText value="#{operacao.opeDescricao}" />
+                    </p:column>    
+                    <p:column headerText="Recurso">
+                        <h:outputText value="#{operacao.recurso.recDescricao}" />
+                    </p:column>    
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

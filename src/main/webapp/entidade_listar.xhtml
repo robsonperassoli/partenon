@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+    <ui:define name="body">
+        <h:form id="frm">
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton action="/entidade_dados_gerais.jsf?faces-redirect=true" image="ui-icon ui-icon-plusthick" value="Nova Entidade" />
+                </p:toolbarGroup>
+            </p:toolbar>
+            
+            <p:dataTable value="#{entidadeMB.list}" var="entidade"
+                         selectionMode="single"
+                         rowSelectListener="#{entidadeMB.handleSelect}">
+                <p:column headerText="Id">
+                    <h:outputText value="#{entidade.entId}" />
+                </p:column>
+                <p:column headerText="Nome">
+                    <h:outputText value="#{entidade.entNome}" />
+                </p:column>
+                <p:column headerText="Cnpj">
+                    <h:outputText value="#{entidade.entCnpj}"/>
+                </p:column>
+                <p:column headerText="Telefone">
+                    <h:outputText value="#{entidade.entTelefone}"/>
+                </p:column>
+                <p:column headerText="E-mail">
+                    <h:outputText value="#{entidade.entEmail}"/>
+                </p:column>
+                
+                <p:column>
+                    <p:commandButton image="ui-icon ui-icon-minusthick" 
+                                     action="#{entidadeMB.excluir(entidade)}"
+                                     update="frm,messages"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,113 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+    <ui:define name="body">
+        
+        <h:form id="frm" prependId="false">
+            
+            
+            <h:panelGrid columns="2" style="width: 100%;" columnClasses="sidebar-modulo,conteudo-modulo">
+                <ui:include src="menu_evento.xhtml" />
+                
+                <h:panelGroup>
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton action="/evento_listar.jsf?faces-redirect=true" image="ui-icon ui-icon-arrowthick-1-w" value="Voltar" />
+                            <p:commandButton value="Salvar" image="ui-icon ui-icon-disk" action="#{eventoMB.salvar()}" update="frm,messages" />
+                            <p:commandButton action="/evento_dados_gerais.jsf?faces-redirect=true" image="ui-icon ui-icon-plusthick" value="Novo Evento" />
+                            <p:commandButton action="#{paginaMB.novaPagina()}" oncomplete="dlgNovaPagina.show(); return false;" update="dlgNovaPaginaDisplay" image="ui-icon ui-icon-plusthick" value="Nova Página" />
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                    
+                    <p:spacer height="8" />
+                    
+                    <p:fieldset legend="Dados do Site">
+                        <h:panelGrid columns="2">
+                            <h:selectBooleanCheckbox id="mostrarInscricao" label="Habilitar inscrição através do Site" 
+                                                     value="#{eventoMB.bean.site.sitMostrarInscricao}" />
+                            <h:outputLabel for="mostrarInscricao" value="Habilitar inscrição através do Site"  />
+                            
+                            <h:selectBooleanCheckbox id="mostrarImoveis" label="Habilitar Visualização de Imóveis do Evento"
+                                                     value="#{eventoMB.bean.site.sitMostrarImoveis}"/>
+                            <h:outputLabel for="mostrarImoveis" value="Habilitar Visualização de Imóveis do Evento" />
+                            
+                            <h:outputLabel for="slugUrl" value="URL Site" />
+                            <p:inputText id="slugUrl" value="#{eventoMB.bean.site.sitSlugUrl}"/>
+                            
+                            <h:outputLabel for="emailContato" value="E-mail Contato" />
+                            <p:inputText id="emailContato" value="#{eventoMB.bean.site.sitEmailContato}"/>
+                            
+                            <h:outputLabel for="foneContato" value="Fone Contato" />
+                            <p:inputText id="foneContato" value="#{eventoMB.bean.site.sitFoneContato}"/>
+                            
+                        </h:panelGrid>
+                    </p:fieldset>
+                    
+                    <p:spacer height="8" />
+                    
+                    <p:fieldset legend="Dados do Twitter">
+                        <h:panelGrid columns="2">
+                            <h:outputLabel for="consumerKey" value="Consumer Key"  />
+                            <p:inputText id="consumerKey" value="#{eventoMB.bean.site.sitTwtConsumerKey}" size="30" />
+                            
+                            <h:outputLabel for="consumerSecret" value="Consumer Secret"  />
+                            <p:inputText id="consumerSecret" value="#{eventoMB.bean.site.sitTwtConsumerSecret}" size="60" />
+                            
+                            <h:outputLabel for="accessToken" value="Access Token"  />
+                            <p:inputText id="accessToken" value="#{eventoMB.bean.site.sitTwtAccessToken}" size="70" />
+                            
+                            <h:outputLabel for="accessTokenSecret" value="Access Token Secret"  />
+                            <p:inputText id="accessTokenSecret" value="#{eventoMB.bean.site.sitTwtAccessTokenSecret}" size="60" />
+                        </h:panelGrid>
+                    </p:fieldset>
+                    
+                    <p:spacer height="8" />
+                    
+                    <p:fieldset legend="Páginas do Site">
+                        <p:dataTable value="#{paginaMB.list}" var="pagina">
+                            <p:column headerText="ID">
+                                <h:outputText value="#{pagina.pgnId}" />
+                            </p:column>
+                            <p:column headerText="Título visível no menu">
+                                <h:outputText value="#{pagina.pgnTituloMenu}" />
+                            </p:column>
+                            <p:column>
+                                <p:commandButton image="ui-icon ui-icon-minusthick" title="Remover Página" 
+                                                 action="#{paginaMB.excluir(pagina)}"
+                                                 update="frm,messages"/>
+                                <p:commandButton image="ui-icon ui-icon-pencil" title="Editar Página" 
+                                                 oncomplete="dlgNovaPagina.show()"
+                                                 update="dlgNovaPaginaDisplay">
+                                    <f:setPropertyActionListener target="#{paginaMB.pagina}" value="#{pagina}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </p:fieldset>
+                    
+                </h:panelGroup>
+                
+            </h:panelGrid>
+            <p:dialog header="Nova Página" widgetVar="dlgNovaPagina" width="650"
+                      onShow="editorConteudo.init()">
+                <h:panelGrid columns="2" id="dlgNovaPaginaDisplay">
+                    
+                    <h:outputLabel value="Título Menu" for="tituloMenu" />
+                    <p:inputText value="#{paginaMB.pagina.pgnTituloMenu}" id="tituloMenu" size="60"/>
+                    
+                    <h:outputLabel value="URL Página" for="tituloPagina" />
+                    <p:inputText value="#{paginaMB.pagina.pgnTituloPagina}" id="tituloPagina" size="60"/>
+                    
+                    <h:outputLabel value="Conteúdo" for="conteudo" />
+                    <p:editor value="#{paginaMB.pagina.pgnConteudo}" id="conteudo" widgetVar="editorConteudo" lazy="true"/>
+                    
+                    <p:commandButton value="Salvar" image="ui-icon ui-icon-check" 
+                                     action="#{paginaMB.salvar()}"
+                                     oncomplete="dlgNovaPagina.hide()"
+                                     update="frm,messages"/>
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

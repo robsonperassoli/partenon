@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:form>
+        <p:menubar>
+            <p:menuitem value="Início" url="/index.jsf"/>
+
+            <p:submenu label="Cadastros">
+                <p:submenu label="Básicos">
+                    <p:menuitem value="Cidades" url="/cidade_listar.jsf" rendered="#{securityContext.hasPermission('menu', 'cidade')}"/>
+                </p:submenu>
+                <p:menuitem value="Entidade" url="/entidade_listar.jsf" rendered="#{securityContext.hasPermission('menu', 'entidade')}"/>
+            </p:submenu>
+
+            <p:menuitem value="Eventos" url="/evento_listar.jsf" rendered="#{securityContext.hasPermission('menu', 'evento')}"/>
+
+            <p:submenu label="Insumos"> 
+                <p:menuitem value="Cadastro de Unidade" url="/unidade_listar.jsf" rendered="#{securityContext.hasPermission('menu', 'unidade')}"/>  
+                <p:menuitem value="Cadastro de Categoria" url="/insumo_categoria_listar.jsf" rendered="#{securityContext.hasPermission('menu', 'insumoCategoria')}"/>
+                <p:menuitem value="Movimentação" url="/insumo_listar.jsf" rendered="#{securityContext.hasPermission('menu', 'insumoMovimentacao')}"/>
+            </p:submenu> 
+
+
+            <p:submenu label="Segurança">
+                <p:menuitem value="Usuários" url="/usuario_listar.jsf" rendered="#{securityContext.hasPermission('menu', 'usuario')}"/>
+                <p:menuitem value="Grupos de Usuários" url="/usuario_grupo_listar.jsf" rendered="#{securityContext.hasPermission('menu', 'grupoUsuario')}"/>
+                <p:menuitem value="Recursos do Sistema" url="/recurso_listar.jsf" rendered="#{securityContext.hasPermission('menu', 'recurso')}"/>
+            </p:submenu>
+
+            <p:menuitem value="Configurações" url="/configuracao.jsf" rendered="#{securityContext.hasPermission('menu', 'configuracao')}"/>
+
+            <p:menuitem value="Sair" action="#{securityContext.logout()}" ajax="false"/>
+        </p:menubar>
+    </h:form>
+
+</ui:composition>

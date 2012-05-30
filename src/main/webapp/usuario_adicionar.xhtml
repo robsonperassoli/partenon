@@ -1,0 +1,51 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+    <ui:define name="body">
+        <h:form id="frm">
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="Voltar" action="/usuario_listar.jsf?faces-redirect=true" ajax="false" image="ui-icon ui-icon-arrowthick-1-w"/>
+                    <p:commandButton value="Salvar" action="#{usuarioMB.salvar()}" image="ui-icon ui-icon-disk" update="messages, frm"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+            
+            <p:dialog header="Grupos de Usuários" widgetVar="dlgUsuarioGrupo" 
+                      modal="true" closable="true">
+                <p:dataTable value="#{usuarioGrupoMB.list}" var="ug"
+                             selectionMode="single"
+                             selection="#{usuarioMB.bean.usuarioGrupo}"
+                             onRowSelectUpdate="grupo"
+                             onselectComplete="dlgUsuarioGrupo.hide()">
+                    <p:column headerText="ID">
+                        <h:outputText value="#{ug.usgId}"/>
+                    </p:column>
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{ug.usgNome}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:dialog>
+            
+            <p:panel>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="ID" for="id"/>
+                    <p:inputText value="#{usuarioMB.bean.usuId}" id="id" />
+                    
+                    <h:outputLabel value="Login" for="login"/>
+                    <p:inputText value="#{usuarioMB.bean.usuLogin}" id="login" />
+                    
+                    <h:outputLabel value="Senha" for="senha"/>
+                    <p:password value="#{usuarioMB.bean.usuSenha}" id="senha" feedback="true" minLength="6"/>
+                    
+                    <h:outputLabel value="Grupo do Usuário" for="grupo"/>
+                    <h:panelGrid columns="2" id="grupo">
+                        <h:outputText value="#{usuarioMB.bean.usuarioGrupo.usgNome}" />
+                        <p:button image="ui-icon ui-icon-search" onclick="dlgUsuarioGrupo.show(); return false;" />
+                    </h:panelGrid>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

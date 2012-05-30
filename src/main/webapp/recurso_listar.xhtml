@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+    <ui:define name="body">
+        <h:form>
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="Novo" action="/recurso_adicionar.jsf?faces-redirect=true" ajax="false" image="ui-icon ui-icon-document"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+            
+            <p:dataTable value="#{recursoMB.list}" var="recurso"
+                         selectionMode="single"
+                         rowSelectListener="#{recursoMB.handleSelect}">
+                <p:column headerText="Id">
+                    <h:outputText value="#{recurso.recId}" />
+                </p:column>
+                <p:column headerText="Descrição">
+                    <h:outputText value="#{recurso.recDescricao}" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

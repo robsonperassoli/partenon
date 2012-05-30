@@ -1,0 +1,61 @@
+<pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.3.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.3.0 http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.3.0.xsd">
+
+    <rewrite match="^/(.*)/$" substitute="/$1" redirect="301" />
+
+    <url-mapping id="inicial">
+        <pattern value="/site/#{slug}" />
+        <view-id value="/site_inicial.jsf" />
+    </url-mapping>
+    
+    
+    <url-mapping id="blog-inicial">
+        <pattern value="/site/#{slug}/blog" />
+        <view-id value="/site_blog.jsf?page=1" />
+    </url-mapping>
+    <url-mapping id="blog">
+        <pattern value="/site/#{slug}/blog/page/#{page}" />
+        <view-id value="/site_blog.jsf" />
+    </url-mapping>
+    <url-mapping id="resultado-enquete">
+        <pattern value="/site/#{slug}/resultado-enquete" />
+        <view-id value="/site_enquete_resultado.jsf" />
+    </url-mapping>
+    
+    
+    <url-mapping id="noticia">
+        <pattern value="/site/#{slug}/noticia/#{ntcId}" />
+        <view-id value="/site_noticia.jsf" />
+    </url-mapping>
+    
+    <url-mapping id="galerias">
+        <pattern value="/site/#{slug}/galerias" />
+        <view-id value="/site_galerias.jsf" />
+    </url-mapping>
+    
+    <url-mapping id="galeria">
+        <pattern value="/site/#{slug}/galeria/#{galId}" />
+        <view-id value="/site_galeria_visualizar.jsf" />
+    </url-mapping>
+    
+    <url-mapping id="contato">
+        <pattern value="/site/#{slug}/contato" />
+        <view-id value="/site_contato.jsf" />
+    </url-mapping>
+    
+    <url-mapping id="imoveis">
+        <pattern value="/site/#{slug}/imoveis" />
+        <view-id value="/site_imoveis.jsf" />
+    </url-mapping>
+    
+    <url-mapping id="imovel">
+        <pattern value="/site/#{slug}/imovel/#{imvId}" />
+        <view-id value="/site_imovel_visualizar.jsf" />
+    </url-mapping>
+    
+    <url-mapping id="pagina">
+        <pattern value="/site/#{slug}/#{pagina}" />
+        <view-id value="/site_pagina.jsf" />
+    </url-mapping>
+</pretty-config>

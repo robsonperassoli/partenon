@@ -1,0 +1,103 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+    <ui:define name="body">
+        <h:form id="frm">
+            <p:dialog header="Novo Pacote" widgetVar="dlgNovoPacote" width="400">
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Nome" for="nome" />
+                    <p:inputText value="#{eventoMB.novoPacote.pctNome}" id="nome" size="60"/>
+                </h:panelGrid>
+                
+                <p:spacer height="8"/>
+                
+                <p:fieldset legend="Programações incluídas neste pacote">
+                    <h:outputLabel value="Programação" for="programacao"/>
+                    <p:button image="ui-icon ui-icon-search" onclick="dlgProgramacoes.show(); return false;"/>
+                    <h:outputText value="#{eventoMB.novaProgramacao.prmNome}" id="programacao" />
+                    <p:commandButton value="Ok" image="ui-icon ui-icon-check" action="#{eventoMB.adicionarProgramacaoParaPacote()}"
+                                     update="programacao,dtbProgramacoes"/>
+                    <p:spacer height="5" style="display:block;"/>
+                    <p:dataTable value="#{eventoMB.novoPacote.programacaoList}" var="prm" id="dtbProgramacoes">
+                        <p:column headerText="ID">
+                            <h:outputText value="#{prm.prmId}"/>
+                        </p:column>
+                        <p:column headerText="Descrição">
+                            <h:outputText value="#{prm.prmNome}"/>
+                        </p:column>
+                        <p:column headerText="Preço">
+                            <h:outputText value="#{prm.prmPreco}"/>
+                        </p:column>
+                    </p:dataTable>
+                    
+                    
+                </p:fieldset>
+                
+                <p:spacer height="8" style="display:block;"/>
+                    
+                <p:commandButton value="Inserir" image="ui-icon ui-icon-check" 
+                             action="#{eventoMB.adicionarPacote()}"
+                             oncomplete="dlgNovoPacote.hide()"
+                             update="frm,messages"/>
+                
+                
+            </p:dialog>
+            
+            <p:dialog header="Programações do Evento" widgetVar="dlgProgramacoes" rendered="#{eventoMB.bean.programacaoList.size() > 0}">
+                <p:dataTable value="#{eventoMB.bean.programacaoList}" var="prog"
+                             selectionMode="single"
+                             selection="#{eventoMB.novaProgramacao}"
+                             onRowSelectUpdate="programacao"
+                             onRowSelectComplete="dlgProgramacoes.hide()">
+                    <p:column headerText="ID">
+                        <h:outputText value="#{prog.prmId}"/>
+                    </p:column>
+                    <p:column headerText="Descrição">
+                        <h:outputText value="#{prog.prmNome}"/>
+                    </p:column>
+                    <p:column headerText="Preço">
+                        <h:outputText value="#{prog.prmPreco}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:dialog>
+            
+            <h:panelGrid columns="2" style="width: 100%;" columnClasses="sidebar-modulo,conteudo-modulo">
+                <ui:include src="menu_evento.xhtml" />
+                
+                <h:panelGroup>
+                   <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton action="/evento_listar.jsf?faces-redirect=true" image="ui-icon ui-icon-arrowthick-1-w" value="Voltar" />
+                            <p:commandButton action="/evento_dados_gerais.jsf?faces-redirect=true" image="ui-icon ui-icon-plusthick" value="Novo Evento" />
+                            <p:button value="Novo Pacote" onclick="dlgNovoPacote.show(); return false;" image="ui-icon ui-icon-plusthick"/>
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                    
+                    <p:spacer height="8" />
+                    
+                    <p:fieldset legend="Pacotes de Programações">
+                        <p:dataTable value="#{eventoMB.bean.pacoteList}" var="pacote">
+                            <p:column headerText="ID">
+                                <h:outputText value="#{pacote.pctId}" />
+                            </p:column>
+                            <p:column headerText="Nome">
+                                <h:outputText value="#{pacote.pctNome}" />
+                            </p:column>
+                            <p:column>
+                                <p:commandButton image="ui-icon ui-icon-minusthick" title="Remover Pacote"
+                                                 action="#{eventoMB.removerPacote(pacote)}"
+                                                 onclick="return false;"
+                                                 update="frm,messages"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:fieldset>
+                    
+                </h:panelGroup>
+                
+            </h:panelGrid>
+            
+        </h:form>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,49 @@
+<ui:composition xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/template/site.xhtml">
+    <ui:define name="content">
+        <h:form>
+
+            <div id="contact-page" class="container clearfix">
+                <div class="main-con">
+                    <div class="title-nav">
+                        <h2>Entre em Contato</h2>
+                    </div>
+                    <div class="content">
+                        <p:messages id="msgMail" />
+                        <ul id="contact-form">
+                            <li class="map">
+                                <label>Localização:</label>
+                                <img src="#{facesContext.externalContext.request.contextPath}/images/pic_map.png" alt="" /> </li>
+                            <li class="user-info">
+                                <label>*Nome:</label>
+                                <span class="input-wrap">
+                                    <h:inputText value="#{contatoSiteMB.nome}" styleClass="flied" />
+                                </span></li>
+                            <li class="user-info">
+                                <label>*Endereço de Email:</label>
+                                <span class="input-wrap">
+                                    <h:inputText value="#{contatoSiteMB.email}" styleClass="flied" />
+                                </span></li>
+                            <li class="user-info">
+                                <label>*Assunto:</label>
+                                <span class="input-wrap">
+                                    <h:inputText value="#{contatoSiteMB.assunto}" styleClass="flied" />
+                                </span> </li>
+                            <li>
+                                <label>*Sua Mensagem:</label>
+                                <span class="input-wrap">
+                                    <h:inputTextarea value="#{contatoSiteMB.mensagem}" styleClass="textarea"/>
+                                </span> </li>
+                            <li class="btn-nav"><span class="fl">* Estes campos são obrigatórios</span>
+                            <h:commandButton value="Enviar Mensagem" action="#{contatoSiteMB.enviarEmail()}" styleClass="submit"/>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </h:form>
+    </ui:define>
+</ui:composition>

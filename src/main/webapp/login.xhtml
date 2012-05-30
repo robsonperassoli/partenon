@@ -1,0 +1,48 @@
+<html xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <f:view contentType="text/html" locale="#currentLocale" />
+    <h:head>
+        <title>Partenon - Gestão Integrada de Eventos</title>
+        <link rel="stylesheet" href="css/default.css" type="text/css" />
+    </h:head>
+
+    <h:body style="background-color:#f1f1f1">
+        <p:dialog modal="false" closable="false" resizable="false" header="Controle de Acesso" visible="true"
+                  closeOnEscape="false"
+                  width="367"
+                  position="center">
+            <h:form>
+                <h:panelGrid columns="2" columnClasses="loginCol1,loginCol2">
+                    <p:graphicImage url="images/login.png" />
+                    <h:panelGrid columns="2" cellspacing="5"> 
+                        <h:outputText value=""/>
+                        <h1>Dados de Acesso</h1>
+                        
+                        <h:outputLabel value="Login" for="login"/>
+                        <p:inputText value="#{loginMB.usuario.usuLogin}" id="login" />
+
+                        <h:outputLabel value="Senha" for="senha"/>
+                        <p:password value="#{loginMB.usuario.usuSenha}" id="senha" feedback="false" minLength="6"/>
+                        
+                        <h:outputText value=""/>
+                        <p:commandButton value="Acessar" action="#{loginMB.login()}" ajax="false"
+                                         style="float: right;"/>
+                    </h:panelGrid>
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+        
+        <p:growl id="messages" globalOnly="true" />
+
+        <p:ajaxStatus style="width:16px;height:16px;">
+            <f:facet name="start">
+                <h:outputText value="Carregando..." />
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>
+    </h:body>
+</html>

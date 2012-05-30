@@ -1,0 +1,28 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <div class="title-nav">
+        <h2>Enquete</h2>
+    </div>
+    <div class="con">
+        <h:messages id="messages"/>
+        <h2 class="enqueteTitulo">#{siteMB.enqueteAtiva.enqDescricao}</h2>
+        <h:selectOneRadio id="alternativas"
+                          value="#{siteMB.alternativaSelecionada}"
+                          converter="enqueteAlternativaConverter"
+                          styleClass="tabelaAlternativas">
+            <f:selectItems value="#{siteMB.enqueteAtiva.alternativas}" 
+                           var="alt"
+                           itemLabel="#{alt.ealDescricao}"
+                           itemValue="#{alt}"/>
+        </h:selectOneRadio>
+    </div>
+    <div class="btns">
+        <p:commandLink action="#{siteMB.votar()}" update="frmEnquete,messages"
+                       ajax="false">
+            Votar
+        </p:commandLink>
+    </div>
+
+</ui:composition>

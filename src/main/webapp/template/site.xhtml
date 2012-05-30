@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:c="http://java.sun.com/jsp/jstl/core" 
+      xmlns="http://www.w3.org/1999/xhtml">
+
+    <f:view contentType="text/html" locale="#currentLocale" />
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="robots" content="index,follow" />
+        <meta name="keywords" content="x" />
+        <meta name="description" content=" " />
+
+        <title>#{siteMB.bean.evento.evtNome} - #{siteMB.bean.evento.evtDescricao}</title>
+        <link type="text/css" href="#{facesContext.externalContext.request.contextPath}/css/site.css" rel="stylesheet" media="screen" />
+        <script type="text/javascript" src="#{facesContext.externalContext.request.contextPath}/js/jquery.js"></script>
+        <script type="text/javascript" src="#{facesContext.externalContext.request.contextPath}/js/common.js"></script>
+        <!--[if IE]>
+        <link type="text/css" href="#{facesContext.externalContext.request.contextPath}/css/ie.css" rel="stylesheet" media="screen" />
+        <![endif]-->
+        <!--[if IE 6]>
+        <script type="text/javascript" src="#{facesContext.externalContext.request.contextPath}/js/pngfix.js"></script>
+        <script type="text/javascript">DD_belatedPNG.fix('img,#logo,.slide-menu');</script> 
+        <![endif]-->
+    </h:head>
+
+    <h:body>
+
+        <div class="top-bar-wrap">
+            <div id="top-bar" class="mod-con">
+                <div class="links">
+                    #{siteMB.bean.evento.evtNome} - #{siteMB.bean.evento.evtDescricao} @ 
+                    De 
+                    <h:outputText value="#{siteMB.bean.evento.evtInicio}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                    à 
+                    <h:outputText value="#{siteMB.bean.evento.evtFim}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                </div>
+<!--                <div class="search">
+                    <input type="text" value="Pesquisa..." name="" />
+                    <button type="submit" class="btn">OK</button>
+                </div>-->
+                <div class="rft">
+<!--                    <a href="#" class="rss"></a>-->
+                    <a href="http://www.facebook.com/pages/Motocão/179437775503900" class="facebook"></a>
+                    <a href="http://twitter.com/#!/motocao_smo" class="twitter"></a>
+                </div>
+            </div>
+        </div>
+        <div class="main-bg">
+            <div id="sub-page" class="main-wrap">
+                <div id="header" class="mod-con">
+                    <h1 id="logo"><a href="#"><img src="#{facesContext.externalContext.request.contextPath}/images/logo.png" alt="" /></a></h1>
+                    <ul id="main-menu">
+                        <li>
+                            <h:outputLink value="#{facesContext.externalContext.request.contextPath}/site/#{siteMB.bean.sitSlugUrl}" styleClass="cur"><strong>Inicial</strong></h:outputLink>
+                        </li>
+                        <li>
+                            <h:outputLink value="#{facesContext.externalContext.request.contextPath}/site/#{siteMB.bean.sitSlugUrl}/blog"><strong>Blog</strong></h:outputLink>
+                        </li>
+                        <li>
+                            <h:outputLink value="#{facesContext.externalContext.request.contextPath}/site/#{siteMB.bean.sitSlugUrl}/galerias"><strong>Fotos</strong></h:outputLink>
+                        </li>
+                        <ui:repeat var="pagina" value="#{siteMB.bean.paginaList}">
+                            <li>
+                                <h:outputLink value="#{facesContext.externalContext.request.contextPath}/site/#{siteMB.bean.sitSlugUrl}/#{pagina.pgnTituloPagina}"><strong>#{pagina.pgnTituloMenu}</strong></h:outputLink>
+                            </li>
+                        </ui:repeat>
+                        <c:if test="${siteMB.bean.sitMostrarImoveis}">
+                            <li>
+                                <h:outputLink value="#{facesContext.externalContext.request.contextPath}/site/#{siteMB.bean.sitSlugUrl}/imoveis"><strong>Imóveis</strong></h:outputLink>
+                            </li>
+                        </c:if>
+                        <li>
+                            <h:outputLink value="#{facesContext.externalContext.request.contextPath}/site/#{siteMB.bean.sitSlugUrl}/contato"><strong>Contato</strong></h:outputLink>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="main" class="mod-con">
+                    <ui:insert name="content" />
+                </div>
+            </div>
+        </div>
+<!--        <div class="siteintro-wrap">
+            <div id="siteintro" class="mod-con clearfix">
+                <dl class="about-us">
+                    <dt>About Us</dt>
+                    <dd><a href="#">Our Company</a></dd>
+                    <dd><a href="#">Our Blog</a></dd>
+                    <dd><a href="#">Submit a Site</a></dd>
+                    <dd><a href="#">Contact Us</a></dd>
+                    <dd><a href="#">Help &amp; Terms</a></dd>
+                    <dd><a href="#">Read Our FAQ</a></dd>
+                </dl>
+                <dl class="categories">
+                    <dt>Categories</dt>
+                    <dd><a href="#">Trends &amp; Technology</a></dd>
+                    <dd><a href="#">Design Companies</a></dd>
+                    <dd><a href="#">Design Freelancers</a></dd>
+                    <dd><a href="#">Web Portfolios</a></dd>
+                    <dd><a href="#">Web Development</a></dd>
+                    <dd><a href="#">General Icons</a></dd>
+                </dl>
+                <dl class="gallery">
+                    <dt>From The Gallery</dt>
+                    <dd><a href="#"><img src="#{facesContext.externalContext.request.contextPath}/images/temp1.jpg" alt="" /></a></dd>
+                    <dd><a href="#"><img src="#{facesContext.externalContext.request.contextPath}/images/temp1.jpg" alt="" /></a></dd>
+                    <dd><a href="#"><img src="#{facesContext.externalContext.request.contextPath}/images/temp1.jpg" alt="" /></a></dd>
+                    <dd><a href="#"><img src="#{facesContext.externalContext.request.contextPath}/images/temp1.jpg" alt="" /></a></dd>
+                    <dd><a href="#"><img src="#{facesContext.externalContext.request.contextPath}/images/temp1.jpg" alt="" /></a></dd>
+                    <dd><a href="#"><img src="#{facesContext.externalContext.request.contextPath}/images/temp1.jpg" alt="" /></a></dd>
+                    <dd><a href="#"><img src="#{facesContext.externalContext.request.contextPath}/images/temp1.jpg" alt="" /></a></dd>
+                    <dd><a href="#"><img src="#{facesContext.externalContext.request.contextPath}/images/temp1.jpg" alt="" /></a></dd>
+                </dl>
+                <dl class="twittwe-updates">
+                    <dt>Twittwe Updates</dt>
+                    <dd>
+                        <p><a href="#">@Dellustrations</a> there is a new designer in 
+                            town people! It’s amazing How you can do
+                            everything inside twitter! <a href="#">http://bit.urds</a></p>
+                        <p><em>2 minutes ago via</em> TweeterDeck</p>
+                    </dd>
+                </dl>
+            </div>
+        </div>-->
+        <div class="footer-wrap">
+            <div id="footer" class="mod-con">
+                <div class="copyright">Motocão &copy; 2012 Todos os Direitos Reservados.</div>
+<!--                <div class="links"><a href="http://www.xhtmlweaver.com">PSD to xHTML Coded by XhtmlWeaver</a> | <a href="#">Log in</a> | <a href="#">Privacy Policy</a> | <a href="#">Contact Us</a></div>-->
+            </div>
+        </div>
+    </h:body>
+</html>

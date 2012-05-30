@@ -1,0 +1,20 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./template/main.xhtml"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="body">
+        <h:form>
+            <h:outputLink value="forma_pagamento_form.jsf">Novo</h:outputLink>
+            <p:dataTable value="#{formaPagamentoMB.list}" var="f">
+                <p:column headerText="ID">
+                    <h:outputText value="#{f.id}" />
+                </p:column>
+                <p:column headerText="Descrição">
+                    <h:outputText value="#{f.descricao}" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

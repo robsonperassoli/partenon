@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:form>
+        <p:menu>
+            <p:menuitem value="Dados Gerais" url="/evento_dados_gerais.jsf?id=#{eventoMB.bean.evtId}" rendered="#{eventoMB.bean.evtId != null}"/>
+            <p:menuitem value="Locais" url="/evento_locais.jsf?id=#{eventoMB.bean.evtId}" rendered="#{eventoMB.bean.evtId != null}"/>
+            <p:menuitem value="Programações" url="/evento_programacoes.jsf?id=#{eventoMB.bean.evtId}" rendered="#{eventoMB.bean.evtId != null}"/>
+            <p:menuitem value="Pacotes" url="/evento_pacotes.jsf?id=#{eventoMB.bean.evtId}" rendered="#{eventoMB.bean.evtId != null}"/>
+            <p:menuitem value="Agenda" url="/evento_agenda.jsf?id=#{eventoMB.bean.evtId}" rendered="#{eventoMB.bean.evtId != null}"/>
+            <p:menuitem value="Movimentações" url="/evento_movimentacoes.jsf?id=#{eventoMB.bean.evtId}" rendered="#{eventoMB.bean.evtId != null}"/>
+            <p:menuitem value="Imóveis" url="/evento_imoveis.jsf?id=#{eventoMB.bean.evtId}" rendered="#{eventoMB.bean.evtId != null}"/>
+            <p:menuitem value="Site" url="/evento_site.jsf?id=#{eventoMB.bean.evtId}" rendered="#{eventoMB.bean.evtId != null}"/>
+            <p:menuitem value="Notícias" url="/evento_site_noticias.jsf?id=#{eventoMB.bean.evtId}" rendered="#{eventoMB.bean.evtId != null}"/>
+            <p:menuitem value="Fotos" url="/evento_site_galerias.jsf?id=#{eventoMB.bean.evtId}" rendered="#{eventoMB.bean.evtId != null}"/>
+            <p:menuitem value="Banners" url="/evento_site_banners.jsf?id=#{eventoMB.bean.evtId}" rendered="#{eventoMB.bean.evtId != null}"/>
+            <p:menuitem value="Enquetes" url="/evento_enquetes.jsf?id=#{eventoMB.bean.evtId}" rendered="#{eventoMB.bean.evtId != null}"/>
+        </p:menu>
+    </h:form>
+
+</ui:composition>

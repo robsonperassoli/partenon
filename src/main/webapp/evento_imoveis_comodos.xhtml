@@ -1,0 +1,123 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="body">
+        <h:form id="frm" prependId="false">
+            <p:dialog header="Imagens do Cômodo" widgetVar="dlgImagens" width="500">
+                <h:panelGroup id="dlgImagensDisplay">
+                    <p:fileUpload fileUploadListener="#{comodoMB.handleUpload}" 
+                                  multiple="true" 
+                                  label="Procurar Imagens..." 
+                                  allowTypes="*.jpg;*.bmp;*.png;*.gif" 
+                                  description="Selecione as Imagens"
+                                  update="imagens"/>
+                    <p:dataTable value="#{comodoMB.imageList}" var="image" id="imagens">
+                        <p:column>
+                            <p:lightBox>
+                                <h:outputLink value="images/#{image.imgNome}">
+                                    <h:graphicImage value="/images/thumbnails/#{image.imgNome}" title="#{image.imgNome}" alt="#{image.imgNome}" />
+                                </h:outputLink>
+                            </p:lightBox>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton image="ui-icon ui-icon-minusthick" title="Remover Imagem" 
+                                             action="#{comodoMB.excluirImagem(image)}"
+                                             update="dlgImagensDisplay,messages"/>
+                        </p:column>
+                    </p:dataTable>
+                    
+                </h:panelGroup>
+
+                <p:spacer height="8" style="display:block;"/>
+
+                <p:button value="Ok" image="ui-icon ui-icon-check" onclick="dlgImagens.hide(); return false;"/>
+            </p:dialog>
+
+            <p:dialog header="Pesquisa de Status" widgetVar="dlgStatus">
+                <p:dataTable value="#{comodoStatusMB.list}" var="status"
+                             selectionMode="single"
+                             selection="#{comodoMB.comodo.comodoStatus}"
+                             onRowSelectUpdate="status"
+                             onRowSelectComplete="dlgStatus.hide()">
+                    <p:column headerText="ID">
+                        <h:outputText value="#{status.cmsId}"/>
+                    </p:column>
+                    <p:column headerText="Descrição">
+                        <h:outputText value="#{status.cmsDescricao}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:dialog>
+
+            <p:dialog header="Novo Cômodo" widgetVar="dlgNovoComodo" width="500">
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Descricão" for="descricao" />
+                    <p:inputText value="#{comodoMB.comodo.cmdDescricao}" id="descricao" size="60"/>
+
+                    <h:outputLabel value="Dimensão" for="dimensao" />
+                    <p:inputText value="#{comodoMB.comodo.cmdDimensao}" id="dimensao" size="15"/>
+
+
+                    <h:outputLabel value="Status" for="status" />
+                    <h:panelGrid columns="2" id="status">
+                        <h:outputText value="#{comodoMB.comodo.comodoStatus.cmsDescricao}"/>
+                        <p:button image="ui-icon ui-icon-search" onclick="dlgStatus.show(); return false;" />
+                    </h:panelGrid>
+                </h:panelGrid>
+                <p:spacer height="8" style="display:block;"/>
+
+                <p:commandButton value="Inserir" image="ui-icon ui-icon-check" 
+                                 action="#{comodoMB.salvar()}"
+                                 oncomplete="dlgNovoComodo.hide()"
+                                 update="frm,messages"/>
+            </p:dialog>
+
+            <h:panelGrid columns="2" style="width: 100%;" columnClasses="sidebar-modulo,conteudo-modulo">
+                <ui:include src="menu_evento.xhtml" />
+
+                <h:panelGroup>
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton action="/evento_listar.jsf?faces-redirect=true" image="ui-icon ui-icon-arrowthick-1-w" value="Voltar" />
+                            <p:commandButton action="/evento_dados_gerais.jsf?faces-redirect=true" image="ui-icon ui-icon-plusthick" value="Novo Evento" />
+                            <p:button value="Novo Cômodo" onclick="dlgNovoComodo.show(); return false;" image="ui-icon ui-icon-plusthick"/>
+                            <p:commandButton value="Visualizar Imóveis" image="ui-icon ui-icon-home" action="#{comodoMB.visualizarImovel()}"/>
+                        </p:toolbarGroup>
+                    </p:toolbar>
+
+                    <p:spacer height="8" />
+
+                    <p:fieldset legend="Cômodos cadastrados para este Imóvel">
+                        <p:dataTable value="#{comodoMB.list}" var="comodo">
+                            <p:column headerText="ID">
+                                <h:outputText value="#{comodo.cmdId}" />
+                            </p:column>
+                            <p:column headerText="Descrição">
+                                <h:outputText value="#{comodo.cmdDescricao}" />
+                            </p:column>
+                            <p:column headerText="Dimensão">
+                                <h:outputText value="#{comodo.cmdDimensao}" />
+                            </p:column>
+                            <p:column headerText="Status">
+                                <h:outputText value="#{comodo.comodoStatus.cmsDescricao}" />
+                            </p:column>
+                            <p:column>
+                                <p:commandButton image="ui-icon ui-icon-image" oncomplete="dlgImagens.show()"
+                                                 update="dlgImagensDisplay">
+                                    <f:setPropertyActionListener target="#{comodoMB.comodo}" value="#{comodo}" />
+                                </p:commandButton>
+                                <p:commandButton image="ui-icon ui-icon-minusthick" action="#{comodoMB.excluir(comodo)}" 
+                                                 update="frm,messages"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:fieldset>
+
+                </h:panelGroup>
+
+            </h:panelGrid>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,39 @@
+* {
+    font-size: 12px;
+}
+
+.sidebar-modulo {
+    width: 150px;
+    vertical-align: top;
+}
+.conteudo-modulo{
+    vertical-align: top;
+}
+
+.ui-datatable .ui-datatable-data .E td{  
+    background-color: #d2ffe9;   
+}  
+
+.ui-datatable .ui-datatable-data .S td{  
+    background-color: #ffd2d2;  
+}
+
+.linkInicial img {
+    display: block;
+    margin: auto;
+}
+
+.linkInicial {
+    color: #636363;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+}
+
+.loginCol1, .loginCol2 {
+    verticalc-align: top;
+}
+
+.loginCol2 {
+    padding-left: 20px;
+}

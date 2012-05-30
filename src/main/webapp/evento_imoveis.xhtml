@@ -1,0 +1,118 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+    <ui:define name="body">
+        <h:form id="frm">
+            <p:dialog header="Pesquisa de Cidades" widgetVar="dlgCidade">
+                <p:dataTable value="#{cidadeMB.list}" var="cidade"
+                             selectionMode="single"
+                             selection="#{imovelMB.imovel.endereco.cidade}"
+                             onRowSelectUpdate="cidade"
+                             onRowSelectComplete="dlgCidade.hide()">
+                    <p:column headerText="ID">
+                        <h:outputText value="#{cidade.cddId}"/>
+                    </p:column>
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{cidade.cddNome}"/>
+                    </p:column>
+                    <p:column headerText="UF">
+                        <h:outputText value="#{cidade.estado.estUf}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:dialog>
+
+            <p:dialog header="Pesquisa de Entidades" widgetVar="dlgEntidades">
+                <p:dataTable value="#{entidadeMB.list}" var="entidade"
+                             selectionMode="single"
+                             selection="#{imovelMB.imovel.entidade}"
+                             onRowSelectUpdate="proprietario"
+                             onRowSelectComplete="dlgEntidades.hide()">
+                    <p:column headerText="ID">
+                        <h:outputText value="#{entidade.entId}"/>
+                    </p:column>
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{entidade.entNome}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:dialog>
+
+            <p:dialog header="Novo Imóvel" widgetVar="dlgNovoImovel" width="500">
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Proprietário" for="proprietario"/>
+                    <h:panelGrid columns="2" id="proprietario">
+                        <h:outputText value="#{imovelMB.imovel.entidade.entNome}" />
+                        <p:button image="ui-icon ui-icon-search" onclick="dlgEntidades.show(); return false;"/>
+                    </h:panelGrid>
+
+                    <h:outputLabel value="Rua" for="rua" />
+                    <p:inputText value="#{imovelMB.imovel.endereco.endRua}" id="rua" size="60"/>
+
+                    <h:outputLabel value="Número" for="numero" />
+                    <p:inputText value="#{imovelMB.imovel.endereco.endNumero}" id="numero" />
+
+                    <h:outputLabel value="Complemento" for="complemento" />
+                    <p:inputText value="#{imovelMB.imovel.endereco.endComplemento}" id="complemento" size="60"/>
+
+                    <h:outputLabel value="Bairro" for="bairro" />
+                    <p:inputText value="#{imovelMB.imovel.endereco.endBairro}" id="bairro" size="30"/>
+
+                    <h:outputLabel value="Cep" for="cep" />
+                    <p:inputMask mask="99999-999" value="#{imovelMB.imovel.endereco.endCep}" id="cep" size="10"/>
+
+                    <h:outputLabel value="Cidade" for="cidade" />
+                    <h:panelGrid columns="2" id="cidade">
+                        <h:outputText value="#{imovelMB.imovel.endereco.cidade.cddNome}"/>
+                        <p:button image="ui-icon ui-icon-search" onclick="dlgCidade.show(); return false;" />
+                    </h:panelGrid>
+                </h:panelGrid>
+                <p:spacer height="8" style="display:block;"/>
+
+                <p:commandButton value="Inserir" image="ui-icon ui-icon-check" 
+                                 action="#{imovelMB.salvar()}"
+                                 oncomplete="dlgNovoImovel.hide()"
+                                 update="frm,messages"/>
+            </p:dialog>
+
+            <h:panelGrid columns="2" style="width: 100%;" columnClasses="sidebar-modulo,conteudo-modulo">
+                <ui:include src="menu_evento.xhtml" />
+
+                <h:panelGroup>
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton action="/evento_listar.jsf?faces-redirect=true" image="ui-icon ui-icon-arrowthick-1-w" value="Voltar" />
+                            <p:commandButton action="/evento_dados_gerais.jsf?faces-redirect=true" image="ui-icon ui-icon-plusthick" value="Novo Evento" />
+                            <p:button value="Novo Imóvel" onclick="dlgNovoImovel.show(); return false;" image="ui-icon ui-icon-plusthick"/>
+                        </p:toolbarGroup>
+                    </p:toolbar>
+
+                    <p:spacer height="8" />
+
+                    <p:fieldset legend="Imóveis cadastrados para este Evento">
+                        <p:dataTable value="#{imovelMB.list}" var="imovel">
+                            <p:column headerText="ID">
+                                <h:outputText value="#{imovel.imvId}" />
+                            </p:column>
+                            <p:column headerText="Rua">
+                                <h:outputText value="#{imovel.endereco.endRua}" />
+                            </p:column>
+                            <p:column headerText="Número">
+                                <h:outputText value="#{imovel.endereco.endNumero}" />
+                            </p:column>
+                            <p:column>
+                                <p:commandButton image="ui-icon ui-icon-home" 
+                                                 action="#{imovelMB.adicionarComodos(imovel)}" />
+                                <p:commandButton image="ui-icon ui-icon-minusthick" action="#{imovelMB.excluir(imovel)}" 
+                                                 update="frm,messages"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:fieldset>
+
+                </h:panelGroup>
+
+            </h:panelGrid>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

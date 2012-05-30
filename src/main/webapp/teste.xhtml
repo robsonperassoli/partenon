@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+    <ui:define name="body">
+        <h:form>
+            
+            <p:dataTable value="#{testeMB.messages}" var="msg">
+                <p:column>
+                    <h:outputText value="#{msg.text}"/>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{msg.createdAt}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>
+            </p:dataTable>
+            
+            <p:panel header="Página para realização de testes">
+
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Mensagem" for="msg"/>
+                    <p:inputText value="#{testeMB.message}" id="msg" />
+                    <p:commandButton value="Enviar para Twitter" action="#{testeMB.sendTwitt()}" update="messages" />                    
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

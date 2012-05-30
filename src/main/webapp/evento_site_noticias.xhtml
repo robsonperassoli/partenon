@@ -1,0 +1,72 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+    <ui:define name="body">
+        
+        <h:form id="frm" prependId="false">
+            
+            <h:panelGrid columns="2" style="width: 100%;" columnClasses="sidebar-modulo,conteudo-modulo">
+               <ui:include src="menu_evento.xhtml" />
+                
+                <h:panelGroup>
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton action="/evento_listar.jsf?faces-redirect=true" image="ui-icon ui-icon-arrowthick-1-w" value="Voltar" />
+                            <p:commandButton action="/evento_dados_gerais.jsf?faces-redirect=true" image="ui-icon ui-icon-plusthick" value="Novo Evento" />
+                            <p:commandButton action="#{noticiaMB.novaNoticia()}" oncomplete="dlgNovaNoticia.show(); return false;" update="dlgNovaNoticiaDisplay" image="ui-icon ui-icon-plusthick" value="Nova Notícia" />
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                    
+                    <p:spacer height="8" />
+                    
+                    <p:fieldset legend="Notícias Cadastradas para o Site">
+                        <p:dataTable value="#{noticiaMB.list}" var="ntc">
+                            <p:column headerText="ID">
+                                <h:outputText value="#{ntc.ntcId}" />
+                            </p:column>
+                            <p:column headerText="Título">
+                                <h:outputText value="#{ntc.ntcTitulo}" />
+                            </p:column>
+                            <p:column>
+                                <p:commandButton image="ui-icon ui-icon-minusthick" title="Remover Notícia" 
+                                                 action="#{noticiaMB.excluir(ntc)}"
+                                                 update="frm,messages"/>
+                                <p:commandButton image="ui-icon ui-icon-pencil" title="Editar Notícia" 
+                                                 oncomplete="dlgNovaNoticia.show()"
+                                                 update="dlgNovaNoticiaDisplay">
+                                    <f:setPropertyActionListener target="#{noticiaMB.noticia}" value="#{ntc}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </p:fieldset>
+                    
+                </h:panelGroup>
+                
+            </h:panelGrid>
+            <p:dialog header="Nova Notícia" widgetVar="dlgNovaNoticia" width="650"
+                      onShow="editorConteudo.init()">
+                <h:panelGrid columns="2" id="dlgNovaNoticiaDisplay">
+                    <h:outputLabel value="Título" for="titulo" />
+                    <p:inputText value="#{noticiaMB.noticia.ntcTitulo}" id="titulo" size="50"/>
+                    
+                    <h:outputLabel value="Conteúdo" for="conteudo" />
+                    <p:editor value="#{noticiaMB.noticia.ntcConteudo}" id="conteudo" widgetVar="editorConteudo" lazy="true"/>
+                    
+                    <h:outputLabel value="" for="" />
+                    <h:panelGrid columns="3">
+                        <h:graphicImage url="images/twitter20px.png" />
+                        <h:selectBooleanCheckbox id="twitter" label="Compartilhar no Twitter" value="#{noticiaMB.shareOnTwitter}" />
+                        <h:outputLabel value="Compartilhar no Twitter" for="twitter" />
+                    </h:panelGrid>
+                    
+                    <p:commandButton value="Salvar" image="ui-icon ui-icon-check" 
+                                     action="#{noticiaMB.salvar()}"
+                                     oncomplete="dlgNovaNoticia.hide()"
+                                     update="frm,messages"/>
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

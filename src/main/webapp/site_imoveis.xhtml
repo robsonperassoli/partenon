@@ -1,0 +1,34 @@
+<ui:composition xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/template/site.xhtml">
+    <ui:define name="content">
+        
+        <div id="portfolio-page" class="container">
+            <div class="main-con">
+                <div class="title-nav">
+                    <h2>Imóveis</h2>
+                    <a href="#" class="btn-add"></a> <a href="#" class="btn-workcategory">Work Category</a> </div>
+                <ul class="lista-imoveis clearfix">
+                    <ui:repeat var="imovel" value="#{siteMB.bean.evento.imovelList}">
+                        <li>
+                            <h:outputLink value="#{facesContext.externalContext.request.contextPath}/site/#{siteMB.bean.sitSlugUrl}/imovel/#{imovel.imvId}">
+                                <h:outputText value="#{imovel.endereco.endRua},#{imovel.endereco.endNumero}, Bairro #{imovel.endereco.endBairro}"/>
+                            </h:outputLink>
+<!--                            <ui:repeat var="comodo" value="#{imovel.comodoList}">
+                                <h:outputText value="#{comodo.cmdDimensao}" escape="false"/>
+                                <h:outputText value="#{comodo.cmdDescricao}" escape="false"/>
+                                <ui:repeat var="imagem" value="#{comodo.imagemList}">
+                                    <p:graphicImage url="/images/thumbnails/#{imagem.imgNome}" />
+                                </ui:repeat>
+                            </ui:repeat>-->
+                        </li>
+                                
+                    </ui:repeat>
+                </ul>
+                <div class="pages-nav"><a href="#" class="previous">« Página anterior</a><div class="pages"><a href="#">1</a><a href="#">2</a><a href="#">3</a><a href="#">4</a><a href="#">5</a></div><a href="#" class="next">Próxima página »</a></div>
+            </div>
+        </div>
+        
+        
+    </ui:define>
+</ui:composition>

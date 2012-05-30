@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+
+    <ui:define name="body">
+        <h:form id="frm">
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="Voltar" action="/insumo_categoria_listar.jsf?faces-redirect=true" ajax="false" image="ui-icon ui-icon-arrowthick-1-w"/>
+                    <p:commandButton value="Salvar" action="#{insumoCategoriaMB.salvar()}" image="ui-icon ui-icon-disk" update="messages, frm"/>
+                    <p:commandButton value="Excluir" action="#{insumoCategoriaMB.excluir()}" image="ui-icon ui-icon-minusthick" update="messages, frm"/>
+                </p:toolbarGroup>
+            </p:toolbar> 
+            <p:panel>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="ID" for="id"/>
+                    <p:inputText value="#{insumoCategoriaMB.bean.ictId}" id="id" disabled="true" />
+
+                    <h:outputLabel value="Descrição" for="descricao"/>
+                    <p:inputText value="#{insumoCategoriaMB.bean.ictDescricao}" id="descricao" />
+
+                    <h:outputLabel value="Cobrável" for="cobravel"/>
+                    <h:selectBooleanCheckbox value="#{insumoCategoriaMB.bean.ictCobravel}" id="cobravel" />
+                    
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

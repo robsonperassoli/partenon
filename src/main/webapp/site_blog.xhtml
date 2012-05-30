@@ -1,0 +1,44 @@
+<ui:composition xmlns:f="http://java.sun.com/jsf/core" 
+                xmlns:h="http://java.sun.com/jsf/html" 
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/template/site.xhtml">
+    <ui:define name="content">
+        <div id="blog-page" class="container clearfix">
+            <div class="main-con">
+                <div class="title-nav">
+                    <h2>Blog</h2>
+                </div>
+                <ul class="blog-list">
+                    <ui:repeat var="noticia" value="#{siteMB.paginaNoticias}">
+                        <li>
+                            <h3><h:outputText value="#{noticia.ntcTitulo}"/></h3>
+<!--                            <div class="author">Posted in: <a href="#">Photography</a> on Tuesday, April 12th, 2010</div>-->
+<!--                            <div class="pic"><img src="image/temp4.jpg" alt="" /></div>-->
+                            <div class="con">
+                                <h:outputText value="#{noticia.ntcConteudo}" escape="false"/>
+                            </div>
+<!--                            <div class="clearfix"><span class="tags">Tags: <a href="#">Beach</a>, <a href="#">Vacations</a>, <a href="#">Ocean</a>, <a href="#">Sea</a></span> <a href="#" class="btn">Read More</a><a href="#" class="btn">23 Comments</a> </div>-->
+                        </li>    
+                        </ui:repeat>
+                    
+                </ul>
+                <div class="pages-nav">
+                    <h:outputLink value="#{facesContext.externalContext.request.contextPath}/site/#{siteMB.bean.sitSlugUrl}/blog/page/#{siteMB.page -1}" styleClass="previous" rendered="#{siteMB.mostrarPaginaAnterior}">
+                        « Página Anterior
+                    </h:outputLink>
+                    
+<!--                    <div class="pages">
+                        <a href="#">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                    </div>-->
+                    <h:outputLink value="#{facesContext.externalContext.request.contextPath}/site/#{siteMB.bean.sitSlugUrl}/blog/page/#{siteMB.page +1}" styleClass="next" rendered="#{siteMB.mostrarProximaPagina}">
+                        Próxima Página »
+                    </h:outputLink>
+                </div>
+                    
+            </div>
+        </div>
+            
+    </ui:define>
+</ui:composition>
