@@ -18,9 +18,6 @@ public class ConfiguracaoMB {
     private Configuracao bean;
     
     @Inject
-    private Parameter<Integer> id;
-
-    @Inject
     private MessageContext messageContext;
     
     public List<Configuracao> getList(){
@@ -28,11 +25,8 @@ public class ConfiguracaoMB {
     }
     
     public Configuracao getBean() {
-        if(this.bean == null) {
-            this.bean = new Configuracao();
-            if(this.id.getValue() != null) 
-                this.bean = business.load(this.id.getValue());
-        }
+        if(this.bean == null)
+            this.bean = business.load(1);
         return bean;
     }
 

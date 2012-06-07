@@ -27,7 +27,7 @@ public class FotoMB {
     private Galeria galeria;
     
     @Inject
-    private Parameter<Integer> id;
+    private Parameter<Integer> galId;
 
     @Inject
     private MessageContext messageContext;
@@ -41,8 +41,8 @@ public class FotoMB {
     public Galeria getGaleria() {
         if(this.galeria == null) {
             this.galeria = new Galeria();
-            if(this.id.getValue() != null) 
-                this.galeria = galeriaBC.load(this.id.getValue());
+            if(this.galId.getValue() != null) 
+                this.galeria = galeriaBC.load(this.galId.getValue());
         }
         return galeria;
     }

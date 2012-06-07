@@ -88,7 +88,7 @@ public class GaleriaMB {
     
     public void adicionarFotos(Galeria galeria) {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.getApplication().getNavigationHandler().handleNavigation(context, null, "evento_site_fotos.jsf?faces-redirect=true&id=" + galeria.getGalId());
+        context.getApplication().getNavigationHandler().handleNavigation(context, null, "evento_site_fotos.jsf?faces-redirect=true&galId=" + galeria.getGalId() + "&id=" + galeria.getSite().getEvento().getEvtId());
     }
 }
 

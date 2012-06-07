@@ -90,7 +90,7 @@ public class ImovelMB {
     
     public void adicionarComodos(Imovel imovel) {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.getApplication().getNavigationHandler().handleNavigation(context, null, "evento_imoveis_comodos.jsf?faces-redirect=true&id=" + imovel.getImvId());
+        context.getApplication().getNavigationHandler().handleNavigation(context, null, "evento_imoveis_comodos.jsf?faces-redirect=true&imvId=" + imovel.getImvId() + "&id=" + imovel.getEvento().getEvtId());
     }
 }
 

@@ -75,7 +75,7 @@ public class LocalMB {
     }
     
     @Transactional
-    public void excluir(Local local){
+    public void excluir(){
         try {
             localBC.delete(local.getLclId());
             messageContext.add("Local removido.", SeverityType.INFO);

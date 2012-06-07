@@ -67,7 +67,7 @@ public class Evento implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento")
     private List<EventoInsumo> eventoInsumoList;
     
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="evento")
+    @OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="evento")
     private List<Local> localList = new ArrayList<Local>();
     
     @OneToMany(cascade=CascadeType.ALL, mappedBy="evento")

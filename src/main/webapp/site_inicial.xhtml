@@ -55,7 +55,9 @@
         <div class="main-bg">
             <div id="home-page" class="main-wrap">
                 <div id="header" class="mod-con">
-                    <h1 id="logo"><a href="#"><img src="#{facesContext.externalContext.request.contextPath}/images/logo.png" alt="" /></a></h1>
+                    <h1 id="logo">
+                        <h:outputLink value="#{facesContext.externalContext.request.contextPath}/site/#{siteMB.bean.sitSlugUrl}"><img src="#{facesContext.externalContext.request.contextPath}/images/logo.png" alt="" /></h:outputLink>
+                    </h1>
                     <ul id="main-menu">
                         <li>
                             <h:outputLink value="#{facesContext.externalContext.request.contextPath}/site/#{siteMB.bean.sitSlugUrl}" styleClass="cur"><strong>Inicial</strong></h:outputLink>

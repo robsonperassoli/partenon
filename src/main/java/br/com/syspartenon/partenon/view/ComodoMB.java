@@ -32,7 +32,8 @@ public class ComodoMB {
     private Imovel imovel;
     
     @Inject
-    private Parameter<Integer> id;
+    private Parameter<Integer> imvId;
+
 
     @Inject
     private MessageContext messageContext;
@@ -46,8 +47,8 @@ public class ComodoMB {
     public Imovel getImovel() {
         if(this.imovel == null) {
             this.imovel = new Imovel();
-            if(this.id.getValue() != null) 
-                this.imovel = imovelBC.load(this.id.getValue());
+            if(this.imvId.getValue() != null) 
+                this.imovel = imovelBC.load(this.imvId.getValue());
         }
         return imovel;
     }
@@ -115,4 +116,3 @@ public class ComodoMB {
         return imagemBC.findAll(getComodo());
     }
 }
-

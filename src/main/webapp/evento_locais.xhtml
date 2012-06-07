@@ -25,16 +25,16 @@
             </p:dialog>
             
             <p:dialog header="Locais do Evento" widgetVar="dlgLocais" rendered="#{localMB.list.size() > 0}">
-                <p:dataTable value="#{localMB.list}" var="local"
+                <p:dataTable value="#{localMB.list}" var="lcl"
                              selectionMode="single"
                              selection="#{localMB.local.lclPai}"
                              onRowSelectUpdate="local_pai"
                              onRowSelectComplete="dlgLocais.hide()">
                     <p:column headerText="ID">
-                        <h:outputText value="#{local.lclId}"/>
+                        <h:outputText value="#{lcl.lclId}"/>
                     </p:column>
                     <p:column headerText="Descrição">
-                        <h:outputText value="#{local.lclDescricao}"/>
+                        <h:outputText value="#{lcl.lclDescricao}"/>
                     </p:column>
                 </p:dataTable>
             </p:dialog>
@@ -54,7 +54,7 @@
                     <p:spacer height="8" />
                     
                     <p:fieldset legend="Locais onde o Evento acontecerá">
-                        <p:dataTable value="#{localMB.evento.localList}" var="local">
+                        <p:dataTable value="#{localMB.list}" var="local">
                             <p:column headerText="ID">
                                 <h:outputText value="#{local.lclId}" />
                             </p:column>
@@ -72,8 +72,10 @@
                             </p:column>
                             <p:column>
                                 <p:commandButton image="ui-icon ui-icon-minusthick" title="Remover Local do Evento" 
-                                                 action="#{localMB.excluir(local)}"
-                                                 update="frm,messages"/>
+                                                 action="#{localMB.excluir()}"
+                                                 update="frm,messages">
+                                    <f:setPropertyActionListener target="#{localMB.local}" value="#{local}" />
+                                </p:commandButton>
                                 <p:commandButton image="ui-icon ui-icon-pencil" title="Editar Local" 
                                                  oncomplete="dlgNovoLocal.show()"
                                                  update="dlgNovoLocalDisplay">
