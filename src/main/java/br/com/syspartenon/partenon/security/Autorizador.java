@@ -3,10 +3,8 @@ package br.com.syspartenon.partenon.security;
 import br.com.syspartenon.partenon.domain.Operacao;
 import br.gov.frameworkdemoiselle.security.Authorizer;
 import java.util.List;
-import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 
-@Alternative
 public class Autorizador implements Authorizer {
 
     @Inject 

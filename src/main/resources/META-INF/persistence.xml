@@ -1,60 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-  <persistence-unit name="partenon-ds" transaction-type="RESOURCE_LOCAL">
-    <class>br.com.syspartenon.partenon.domain.Noticia</class>
-    <class>br.com.syspartenon.partenon.domain.Imagem</class>
-    <class>br.com.syspartenon.partenon.domain.Evento</class>
-    <class>br.com.syspartenon.partenon.domain.EventoEntidade</class>
-    <class>br.com.syspartenon.partenon.domain.Comodo</class>
-    <class>br.com.syspartenon.partenon.domain.Permissao</class>
-    <class>br.com.syspartenon.partenon.domain.EventoInsumo</class>
-    <class>br.com.syspartenon.partenon.domain.Cidade</class>
-    <class>br.com.syspartenon.partenon.domain.Insumo</class>
-    <class>br.com.syspartenon.partenon.domain.Recurso</class>
-    <class>br.com.syspartenon.partenon.domain.ProgramaEntidade</class>
-    <class>br.com.syspartenon.partenon.domain.Usuario</class>
-    <class>br.com.syspartenon.partenon.domain.Endereco</class>
-    <class>br.com.syspartenon.partenon.domain.Programacao</class>
-    <class>br.com.syspartenon.partenon.domain.Imovel</class>
-    <class>br.com.syspartenon.partenon.domain.Pagina</class>
-    <class>br.com.syspartenon.partenon.domain.Pacote</class>
-    <class>br.com.syspartenon.partenon.domain.Unidade</class>
-    <class>br.com.syspartenon.partenon.domain.InsumoLocacao</class>
-    <class>br.com.syspartenon.partenon.domain.MovimentacaoOrigem</class>
-    <class>br.com.syspartenon.partenon.domain.EventoInsumoCategoria</class>
-    <class>br.com.syspartenon.partenon.domain.Inscricao</class>
-    <class>br.com.syspartenon.partenon.domain.LocalProgramacao</class>
-    <class>br.com.syspartenon.partenon.domain.Site</class>
-    <class>br.com.syspartenon.partenon.domain.Local</class>
-    <class>br.com.syspartenon.partenon.domain.FormaPagamento</class>
-    <class>br.com.syspartenon.partenon.domain.EntidadeEntidadeCategoria</class>
-    <class>br.com.syspartenon.partenon.domain.EntidadeCategoria</class>
-    <class>br.com.syspartenon.partenon.domain.InsumoCategoria</class>
-    <class>br.com.syspartenon.partenon.domain.Movimentacao</class>
-    <class>br.com.syspartenon.partenon.domain.Estado</class>
-    <class>br.com.syspartenon.partenon.domain.Operacao</class>
-    <class>br.com.syspartenon.partenon.domain.UsuarioGrupo</class>
-    <class>br.com.syspartenon.partenon.domain.ControleEntrada</class>
-    <class>br.com.syspartenon.partenon.domain.Entidade</class>
-    <class>br.com.syspartenon.partenon.domain.Programa</class>
-    <class>br.com.syspartenon.partenon.domain.ComodoStatus</class>
-    <class>br.com.syspartenon.partenon.domain.Galeria</class>
-    <class>br.com.syspartenon.partenon.domain.Foto</class>
-    <class>br.com.syspartenon.partenon.domain.EntradaAgenda</class>
-    <class>br.com.syspartenon.partenon.domain.Banner</class>
-    <class>br.com.syspartenon.partenon.domain.Configuracao</class>
-    <class>br.com.syspartenon.partenon.domain.Enquete</class>
-    <class>br.com.syspartenon.partenon.domain.EnqueteAlternativa</class>
-    <properties>
-      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-      <property name="javax.persistence.jdbc.user" value="postgres"/>
-      <property name="javax.persistence.jdbc.password" value="postgres"/>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/partenon"/>
-      <property name="eclipselink.logging.level" value="OFF"/>
-      <!--            <property name="eclipselink.logging.level" value="FINE" />-->
-      <property name="eclipselink.cache.shared.default" value="false"/>
-      <property name="eclipselink.ddl-generation" value="create-tables"/>
-      <property name="eclipselink.ddl-generation.output-mode" value="database"/>
-    </properties>
-  </persistence-unit>
+    
+    <persistence-unit name="partenon-ds" transaction-type="RESOURCE_LOCAL">
+        <class>br.com.syspartenon.partenon.domain.Noticia</class>
+        <class>br.com.syspartenon.partenon.domain.Imagem</class>
+        <class>br.com.syspartenon.partenon.domain.Evento</class>
+        <class>br.com.syspartenon.partenon.domain.EventoEntidade</class>
+        <class>br.com.syspartenon.partenon.domain.Comodo</class>
+        <class>br.com.syspartenon.partenon.domain.Permissao</class>
+        <class>br.com.syspartenon.partenon.domain.EventoInsumo</class>
+        <class>br.com.syspartenon.partenon.domain.Cidade</class>
+        <class>br.com.syspartenon.partenon.domain.Insumo</class>
+        <class>br.com.syspartenon.partenon.domain.Recurso</class>
+        <class>br.com.syspartenon.partenon.domain.ProgramaEntidade</class>
+        <class>br.com.syspartenon.partenon.domain.Usuario</class>
+        <class>br.com.syspartenon.partenon.domain.Endereco</class>
+        <class>br.com.syspartenon.partenon.domain.Programacao</class>
+        <class>br.com.syspartenon.partenon.domain.Imovel</class>
+        <class>br.com.syspartenon.partenon.domain.Pagina</class>
+        <class>br.com.syspartenon.partenon.domain.Pacote</class>
+        <class>br.com.syspartenon.partenon.domain.Unidade</class>
+        <class>br.com.syspartenon.partenon.domain.InsumoLocacao</class>
+        <class>br.com.syspartenon.partenon.domain.MovimentacaoOrigem</class>
+        <class>br.com.syspartenon.partenon.domain.EventoInsumoCategoria</class>
+        <class>br.com.syspartenon.partenon.domain.Inscricao</class>
+        <class>br.com.syspartenon.partenon.domain.LocalProgramacao</class>
+        <class>br.com.syspartenon.partenon.domain.Site</class>
+        <class>br.com.syspartenon.partenon.domain.Local</class>
+        <class>br.com.syspartenon.partenon.domain.FormaPagamento</class>
+        <class>br.com.syspartenon.partenon.domain.EntidadeEntidadeCategoria</class>
+        <class>br.com.syspartenon.partenon.domain.EntidadeCategoria</class>
+        <class>br.com.syspartenon.partenon.domain.InsumoCategoria</class>
+        <class>br.com.syspartenon.partenon.domain.Movimentacao</class>
+        <class>br.com.syspartenon.partenon.domain.Estado</class>
+        <class>br.com.syspartenon.partenon.domain.Operacao</class>
+        <class>br.com.syspartenon.partenon.domain.UsuarioGrupo</class>
+        <class>br.com.syspartenon.partenon.domain.ControleEntrada</class>
+        <class>br.com.syspartenon.partenon.domain.Entidade</class>
+        <class>br.com.syspartenon.partenon.domain.Programa</class>
+        <class>br.com.syspartenon.partenon.domain.ComodoStatus</class>
+        <class>br.com.syspartenon.partenon.domain.Galeria</class>
+        <class>br.com.syspartenon.partenon.domain.Foto</class>
+        <class>br.com.syspartenon.partenon.domain.EntradaAgenda</class>
+        <class>br.com.syspartenon.partenon.domain.Banner</class>
+        <class>br.com.syspartenon.partenon.domain.Configuracao</class>
+        <class>br.com.syspartenon.partenon.domain.Enquete</class>
+        <class>br.com.syspartenon.partenon.domain.EnqueteAlternativa</class>
+    
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="javax.persistence.jdbc.user" value="postgres"/>
+            <property name="javax.persistence.jdbc.password" value="postgres"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/partenon"/>
+            <property name="eclipselink.logging.level" value="FINE" />
+            <property name="eclipselink.cache.shared.default" value="false"/>
+            <property name="eclipselink.ddl-generation" value="create-tables"/>
+            <property name="eclipselink.ddl-generation.output-mode" value="database"/>
+        </properties>
+    </persistence-unit>
 </persistence>

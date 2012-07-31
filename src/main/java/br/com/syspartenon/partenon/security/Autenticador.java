@@ -5,10 +5,8 @@ import br.com.syspartenon.partenon.domain.Usuario;
 import br.com.syspartenon.partenon.view.LoginMB;
 import br.gov.frameworkdemoiselle.security.Authenticator;
 import br.gov.frameworkdemoiselle.security.User;
-import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 
-@Alternative
 public class Autenticador implements Authenticator {
     
     @Inject
@@ -20,6 +18,7 @@ public class Autenticador implements Authenticator {
     @Inject
     private SessionAttributes sessionAttributes;
     
+    @Override
     public boolean authenticate() {
         Usuario retorno = usuarioBC.login(loginMB.getUsuario().getUsuLogin(), loginMB.getUsuario().getUsuSenha());
         if(retorno == null)
@@ -29,10 +28,12 @@ public class Autenticador implements Authenticator {
         return true;
     }
 
+    @Override
     public void unAuthenticate() {
         sessionAttributes = null;
     }
 
+    @Override
     public User getUser() {
         if(sessionAttributes.getUsuario() == null)
             return null;

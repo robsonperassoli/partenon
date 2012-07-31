@@ -1,5 +1,5 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
 
     <ui:define name="body">
@@ -73,7 +73,7 @@
                             <p:column>
                                 <p:commandButton image="ui-icon ui-icon-minusthick" title="Remover Local do Evento" 
                                                  action="#{localMB.excluir()}"
-                                                 update="frm,messages">
+                                                 update=":frm,:messages">
                                     <f:setPropertyActionListener target="#{localMB.local}" value="#{local}" />
                                 </p:commandButton>
                                 <p:commandButton image="ui-icon ui-icon-pencil" title="Editar Local" 
@@ -123,7 +123,7 @@
                     <p:commandButton value="Inserir" image="ui-icon ui-icon-check" 
                                      action="#{localMB.salvar()}"
                                      oncomplete="dlgNovoLocal.hide()"
-                                     update="frm,messages"/>
+                                     update=":frm,:messages"/>
                 </h:panelGrid>
             </p:dialog>
         </h:form>
