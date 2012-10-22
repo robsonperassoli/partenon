@@ -7,7 +7,6 @@
         <class>br.com.syspartenon.partenon.domain.Evento</class>
         <class>br.com.syspartenon.partenon.domain.EventoEntidade</class>
         <class>br.com.syspartenon.partenon.domain.Comodo</class>
-        <class>br.com.syspartenon.partenon.domain.Permissao</class>
         <class>br.com.syspartenon.partenon.domain.EventoInsumo</class>
         <class>br.com.syspartenon.partenon.domain.Cidade</class>
         <class>br.com.syspartenon.partenon.domain.Insumo</class>
@@ -28,7 +27,6 @@
         <class>br.com.syspartenon.partenon.domain.Site</class>
         <class>br.com.syspartenon.partenon.domain.Local</class>
         <class>br.com.syspartenon.partenon.domain.FormaPagamento</class>
-        <class>br.com.syspartenon.partenon.domain.EntidadeEntidadeCategoria</class>
         <class>br.com.syspartenon.partenon.domain.EntidadeCategoria</class>
         <class>br.com.syspartenon.partenon.domain.InsumoCategoria</class>
         <class>br.com.syspartenon.partenon.domain.Movimentacao</class>

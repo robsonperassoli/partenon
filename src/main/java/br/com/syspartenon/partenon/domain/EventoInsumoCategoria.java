@@ -25,7 +25,7 @@ public class EventoInsumoCategoria implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "eic_id")
-    @GeneratedValue(generator="EvenmtoInsumoCategoriaGen", strategy= GenerationType.SEQUENCE)
+    @GeneratedValue(generator="EventoInsumoCategoriaGen", strategy= GenerationType.SEQUENCE)
     private Integer eicId;
     
     @Column(name = "eic_descricao")

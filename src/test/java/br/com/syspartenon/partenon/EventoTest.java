@@ -1,19 +1,15 @@
 package br.com.syspartenon.partenon;
 
-import java.util.Date;
 import br.com.syspartenon.partenon.business.EventoBC;
-import br.com.syspartenon.partenon.domain.Endereco;
-import br.com.syspartenon.partenon.domain.Evento;
-import br.com.syspartenon.partenon.domain.Local;
 import br.gov.frameworkdemoiselle.junit.DemoiselleRunner;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
 import javax.inject.Inject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.junit.Assert.*;
 
 @RunWith(DemoiselleRunner.class)
 public class EventoTest {
+    
     @Inject
     private EventoBC eventoBC;
     

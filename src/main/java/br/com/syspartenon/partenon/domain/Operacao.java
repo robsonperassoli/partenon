@@ -26,7 +26,7 @@ public class Operacao implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "ope_id")
-    @GeneratedValue(generator="OperacaoOen", strategy= GenerationType.SEQUENCE)
+    @GeneratedValue(generator="OperacaoGen", strategy= GenerationType.SEQUENCE)
     private Integer opeId;
     
     @Column(name = "ope_descricao")
