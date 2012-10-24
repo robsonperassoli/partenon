@@ -12,7 +12,8 @@
             
             <p:dataTable value="#{eventoMB.list}" var="evento"
                          selectionMode="single"
-                         rowSelectListener="#{eventoMB.handleSelect}">
+                         rowKey="#{evento.evtId}">
+                <p:ajax event="rowSelect" listener="#{eventoMB.handleSelect}" />
                 <p:column headerText="Id">
                     <h:outputText value="#{evento.evtId}" />
                 </p:column>
@@ -35,7 +36,7 @@
                 <p:column>
                     <p:commandButton image="ui-icon ui-icon-minusthick" 
                                      action="#{eventoMB.excluir(evento)}"
-                                     update="frm,messages"/>
+                                     update=":frm"/>
                 </p:column>
             </p:dataTable>
 

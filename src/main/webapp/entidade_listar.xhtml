@@ -12,7 +12,8 @@
             
             <p:dataTable value="#{entidadeMB.list}" var="entidade"
                          selectionMode="single"
-                         rowSelectListener="#{entidadeMB.handleSelect}">
+                         rowKey="#{entidade.entId}">
+                <p:ajax event="rowSelect" listener="#{entidadeMB.handleSelect}" />
                 <p:column headerText="Id">
                     <h:outputText value="#{entidade.entId}" />
                 </p:column>
@@ -32,7 +33,7 @@
                 <p:column>
                     <p:commandButton image="ui-icon ui-icon-minusthick" 
                                      action="#{entidadeMB.excluir(entidade)}"
-                                     update="frm,messages"/>
+                                     update=":frm"/>
                 </p:column>
             </p:dataTable>
         </h:form>

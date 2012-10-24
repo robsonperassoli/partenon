@@ -4,26 +4,6 @@
 
     <ui:define name="body">
         <h:form id="frm">
-            
-            <p:dialog header="Pesquisa de Cidades" widgetVar="dlgCidade">
-                <p:dataTable value="#{cidadeMB.list}" var="cidade"
-                             selectionMode="single"
-                             selection="#{eventoMB.bean.local.endereco.cidade}"
-                             onRowSelectUpdate="cidade"
-                             onRowSelectComplete="dlgCidade.hide()"
-                             rowKey="#{cidade.cddId}">
-                    <p:column headerText="ID">
-                        <h:outputText value="#{cidade.cddId}"/>
-                    </p:column>
-                    <p:column headerText="Nome">
-                        <h:outputText value="#{cidade.cddNome}"/>
-                    </p:column>
-                    <p:column headerText="UF">
-                        <h:outputText value="#{cidade.estado.estUf}"/>
-                    </p:column>
-                </p:dataTable>
-            </p:dialog>
-            
             <h:panelGrid columns="2" style="width: 100%;" columnClasses="sidebar-modulo,conteudo-modulo">
                 <ui:include src="menu_evento.xhtml" />
                 
@@ -81,10 +61,16 @@
                             <p:inputMask mask="99999-999" value="#{eventoMB.bean.local.endereco.endCep}" id="cep" size="10"/>
                             
                             <h:outputLabel value="Cidade" for="cidade" />
-                            <h:panelGrid columns="2" id="cidade">
-                                <h:outputText value="#{eventoMB.bean.local.endereco.cidade.cddNome}"  />
-                                <p:button image="ui-icon ui-icon-search" onclick="dlgCidade.show(); return false;" />
-                            </h:panelGrid>
+                            <p:autoComplete value="#{eventoMB.bean.local.endereco.cidade}"
+                                            id="cidade"
+                                            completeMethod="#{cidadeMB.filtrarPorNome}"
+                                            forceSelection="true"
+                                            dropdown="true"
+                                            var="cidade"
+                                            itemLabel="#{cidade.cddNome}"
+                                            itemValue="#{cidade}"
+                                            converter="cidadeConverter"
+                                            size="50"/>
                         </h:panelGrid>
                     </p:fieldset>
                 </h:panelGroup>

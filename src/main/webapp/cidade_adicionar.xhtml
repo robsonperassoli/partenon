@@ -7,8 +7,8 @@
             <p:toolbar>
                 <p:toolbarGroup>
                     <p:commandButton value="Voltar" action="/cidade_listar.jsf?faces-redirect=true" ajax="false" image="ui-icon ui-icon-arrowthick-1-w"/>
-                    <p:commandButton value="Salvar" action="#{cidadeMB.salvar()}" image="ui-icon ui-icon-disk" update="messages, frm"/>
-                    <p:commandButton value="Excluir" action="#{cidadeMB.excluir()}" image="ui-icon ui-icon-minusthick" update="messages, frm"/>
+                    <p:commandButton value="Salvar" action="#{cidadeMB.salvar()}" image="ui-icon ui-icon-disk" update=":frm"/>
+                    <p:commandButton value="Excluir" action="#{cidadeMB.excluir()}" image="ui-icon ui-icon-minusthick" update=":frm"/>
                 </p:toolbarGroup>
             </p:toolbar>
             
@@ -17,8 +17,8 @@
                 <p:dataTable value="#{estadoMB.list}" var="est"
                              selectionMode="single"
                              selection="#{cidadeMB.bean.estado}"
-                             onRowSelectUpdate="estado"
-                             onselectComplete="dlgCidadeEstado.hide()">
+                             rowKey="#{est.estId}">
+                    <p:ajax event="rowSelect" update=":frm:estado" oncomplete="dlgCidadeEstado.hide()" />
                     <p:column headerText="UF">
                         <h:outputText value="#{est.estUf}"/>
                     </p:column>
@@ -38,7 +38,7 @@
        
                     <h:outputLabel value="Estado" for="estado"/>
                     <h:panelGrid columns="2" id="estado">
-                        <h:outputText value="#{cidadeMB.bean.estado.estUf}" />
+                        <h:outputText value="#{cidadeMB.bean.estado.estNome}" />
                         <p:button image="ui-icon ui-icon-search" onclick="dlgCidadeEstado.show(); return false;" />                        
                     </h:panelGrid>
                 </h:panelGrid>

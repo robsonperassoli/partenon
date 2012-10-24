@@ -10,7 +10,10 @@ import br.com.syspartenon.partenon.domain.Endereco;
 import br.com.syspartenon.partenon.domain.Entidade;
 import br.com.syspartenon.partenon.domain.EntidadeCategoria;
 import br.com.syspartenon.partenon.domain.Usuario;
+import br.com.syspartenon.partenon.util.JsfUtil;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import org.primefaces.event.SelectEvent;
 
@@ -88,8 +91,12 @@ public class EntidadeMB {
         }
     }
 
-    public String handleSelect(SelectEvent e) {
-        return "/entidade_dados_gerais.jsf?faces-redirect=true&id=" + ((Entidade) e.getObject()).getEntId();
+    public void handleSelect(SelectEvent e) {
+        try {
+            JsfUtil.redirect("entidade_dados_gerais.jsf?faces-redirect=true&id=" + ((Entidade) e.getObject()).getEntId());
+        } catch (Exception ex) {
+            messageContext.add(ex.getMessage(), SeverityType.FATAL);
+        }
     }
 
     public void adicionaCategoria() {

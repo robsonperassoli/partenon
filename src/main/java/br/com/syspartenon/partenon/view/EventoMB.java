@@ -19,7 +19,10 @@ import br.com.syspartenon.partenon.domain.Pagina;
 import br.com.syspartenon.partenon.domain.Programa;
 import br.com.syspartenon.partenon.domain.Programacao;
 import br.com.syspartenon.partenon.domain.Site;
+import br.com.syspartenon.partenon.util.JsfUtil;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import org.primefaces.event.SelectEvent;
 
@@ -57,7 +60,6 @@ public class EventoMB {
             this.bean = new Evento();
             this.bean.setLocal(new Local());
             this.bean.getLocal().setEndereco(new Endereco());
-            this.bean.getLocal().getEndereco().setCidade(new Cidade());
             this.bean.setSite(new Site());
             this.bean.getSite().setEvento(bean);
             if(this.id.getValue() != null) 
@@ -178,8 +180,12 @@ public class EventoMB {
         }
     }
     
-    public String handleSelect(SelectEvent e){
-        return "/evento_dados_gerais.jsf?faces-redirect=true&id=" + ((Evento) e.getObject()).getEvtId();
+    public void handleSelect(SelectEvent e){
+        try {
+            JsfUtil.redirect("evento_dados_gerais.jsf?id=" + ((Evento) e.getObject()).getEvtId());
+        } catch (Exception ex) {
+            messageContext.add(ex.getMessage(), SeverityType.FATAL);
+        }
     }
     
     @Transactional

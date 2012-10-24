@@ -23,7 +23,7 @@
                 <p:commandButton value="Salvar" image="ui-icon ui-icon-check" 
                                  action="#{entradaAgendaMB.salvar()}"
                                  oncomplete="dlgNovaEntrada.hide()"
-                                 update="frm,messages"/>
+                                 update=":frm"/>
             </p:dialog>
 
             <h:panelGrid columns="2" style="width: 100%;" columnClasses="sidebar-modulo,conteudo-modulo">
@@ -60,7 +60,7 @@
                             </p:column>
                             <p:column>
                                 <p:commandButton image="ui-icon ui-icon-minusthick" action="#{entradaAgendaMB.excluir(entrada)}" 
-                                                 update="frm,messages"/>
+                                                 update=":frm"/>
                             </p:column>
                         </p:dataTable>
                     </p:fieldset>

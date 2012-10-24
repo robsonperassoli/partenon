@@ -12,7 +12,8 @@
             
             <p:dataTable value="#{cidadeMB.list}" var="cidade"
                          selectionMode="single"
-                         rowSelectListener="#{cidadeMB.handleSelect}">
+                         rowKey="#{cidade.cddId}">
+                <p:ajax event="rowSelect" listener="#{cidadeMB.handleSelect}" />
                 <p:column headerText="Id">
                     <h:outputText value="#{cidade.cddId}" />
                 </p:column>

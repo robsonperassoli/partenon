@@ -5,8 +5,6 @@
     <ui:define name="body">
         
         <h:form id="frm" prependId="false">
-            
-            
             <h:panelGrid columns="2" style="width: 100%;" columnClasses="sidebar-modulo,conteudo-modulo">
                 <ui:include src="menu_evento.xhtml" />
                 
@@ -14,9 +12,9 @@
                     <p:toolbar>
                         <p:toolbarGroup>
                             <p:commandButton action="/evento_listar.jsf?faces-redirect=true" image="ui-icon ui-icon-arrowthick-1-w" value="Voltar" />
-                            <p:commandButton value="Salvar" image="ui-icon ui-icon-disk" action="#{eventoMB.salvar()}" update="frm,messages" />
+                            <p:commandButton value="Salvar" image="ui-icon ui-icon-disk" action="#{eventoMB.salvar()}" update=":frm" />
                             <p:commandButton action="/evento_dados_gerais.jsf?faces-redirect=true" image="ui-icon ui-icon-plusthick" value="Novo Evento" />
-                            <p:commandButton action="#{paginaMB.novaPagina()}" oncomplete="dlgNovaPagina.show(); return false;" update="dlgNovaPaginaDisplay" image="ui-icon ui-icon-plusthick" value="Nova Página" />
+                            <p:commandButton action="#{paginaMB.novaPagina()}" oncomplete="dlgNovaPagina.show()" update=":frm:dlgNovaPaginaDisplay" image="ui-icon ui-icon-plusthick" value="Nova Página" />
                         </p:toolbarGroup>
                     </p:toolbar>
                     
@@ -75,10 +73,10 @@
                             <p:column>
                                 <p:commandButton image="ui-icon ui-icon-minusthick" title="Remover Página" 
                                                  action="#{paginaMB.excluir(pagina)}"
-                                                 update="frm,messages"/>
+                                                 update=":frm"/>
                                 <p:commandButton image="ui-icon ui-icon-pencil" title="Editar Página" 
                                                  oncomplete="dlgNovaPagina.show()"
-                                                 update="dlgNovaPaginaDisplay">
+                                                 update=":frm:dlgNovaPaginaDisplay">
                                     <f:setPropertyActionListener target="#{paginaMB.pagina}" value="#{pagina}" />
                                 </p:commandButton>
                             </p:column>
@@ -89,7 +87,7 @@
                 
             </h:panelGrid>
             <p:dialog header="Nova Página" widgetVar="dlgNovaPagina" width="650"
-                      onShow="editorConteudo.init()">
+                      dynamic="true">
                 <h:panelGrid columns="2" id="dlgNovaPaginaDisplay">
                     
                     <h:outputLabel value="Título Menu" for="tituloMenu" />
@@ -99,12 +97,12 @@
                     <p:inputText value="#{paginaMB.pagina.pgnTituloPagina}" id="tituloPagina" size="60"/>
                     
                     <h:outputLabel value="Conteúdo" for="conteudo" />
-                    <p:editor value="#{paginaMB.pagina.pgnConteudo}" id="conteudo" widgetVar="editorConteudo" lazy="true"/>
+                    <p:editor value="#{paginaMB.pagina.pgnConteudo}" id="conteudo" widgetVar="editorConteudo"/>
                     
                     <p:commandButton value="Salvar" image="ui-icon ui-icon-check" 
                                      action="#{paginaMB.salvar()}"
                                      oncomplete="dlgNovaPagina.hide()"
-                                     update="frm,messages"/>
+                                     update=":frm"/>
                 </h:panelGrid>
             </p:dialog>
         </h:form>

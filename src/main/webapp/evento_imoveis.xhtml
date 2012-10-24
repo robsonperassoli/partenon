@@ -4,30 +4,12 @@
 
     <ui:define name="body">
         <h:form id="frm">
-            <p:dialog header="Pesquisa de Cidades" widgetVar="dlgCidade">
-                <p:dataTable value="#{cidadeMB.list}" var="cidade"
-                             selectionMode="single"
-                             selection="#{imovelMB.imovel.endereco.cidade}"
-                             onRowSelectUpdate="cidade"
-                             onRowSelectComplete="dlgCidade.hide()">
-                    <p:column headerText="ID">
-                        <h:outputText value="#{cidade.cddId}"/>
-                    </p:column>
-                    <p:column headerText="Nome">
-                        <h:outputText value="#{cidade.cddNome}"/>
-                    </p:column>
-                    <p:column headerText="UF">
-                        <h:outputText value="#{cidade.estado.estUf}"/>
-                    </p:column>
-                </p:dataTable>
-            </p:dialog>
-
             <p:dialog header="Pesquisa de Entidades" widgetVar="dlgEntidades">
                 <p:dataTable value="#{entidadeMB.list}" var="entidade"
                              selectionMode="single"
                              selection="#{imovelMB.imovel.entidade}"
-                             onRowSelectUpdate="proprietario"
-                             onRowSelectComplete="dlgEntidades.hide()">
+                             rowKey="#{entidade.entId}">
+                    <p:ajax event="rowSelect" oncomplete="dlgEntidades.hide()" update=":frm:proprietario" />
                     <p:column headerText="ID">
                         <h:outputText value="#{entidade.entId}"/>
                     </p:column>
@@ -61,17 +43,23 @@
                     <p:inputMask mask="99999-999" value="#{imovelMB.imovel.endereco.endCep}" id="cep" size="10"/>
 
                     <h:outputLabel value="Cidade" for="cidade" />
-                    <h:panelGrid columns="2" id="cidade">
-                        <h:outputText value="#{imovelMB.imovel.endereco.cidade.cddNome}"/>
-                        <p:button image="ui-icon ui-icon-search" onclick="dlgCidade.show(); return false;" />
-                    </h:panelGrid>
+                    <p:autoComplete value="#{imovelMB.imovel.endereco.cidade}"
+                                    id="cidade"
+                                    completeMethod="#{cidadeMB.filtrarPorNome}"
+                                    forceSelection="true"
+                                    dropdown="true"
+                                    var="cidade"
+                                    itemLabel="#{cidade.cddNome}"
+                                    itemValue="#{cidade}"
+                                    converter="cidadeConverter"
+                                    size="50"/>
                 </h:panelGrid>
                 <p:spacer height="8" style="display:block;"/>
 
                 <p:commandButton value="Inserir" image="ui-icon ui-icon-check" 
                                  action="#{imovelMB.salvar()}"
                                  oncomplete="dlgNovoImovel.hide()"
-                                 update="frm,messages"/>
+                                 update=":frm"/>
             </p:dialog>
 
             <h:panelGrid columns="2" style="width: 100%;" columnClasses="sidebar-modulo,conteudo-modulo">
@@ -103,7 +91,7 @@
                                 <p:commandButton image="ui-icon ui-icon-home" 
                                                  action="#{imovelMB.adicionarComodos(imovel)}" />
                                 <p:commandButton image="ui-icon ui-icon-minusthick" action="#{imovelMB.excluir(imovel)}" 
-                                                 update="frm,messages"/>
+                                                 update=":frm"/>
                             </p:column>
                         </p:dataTable>
                     </p:fieldset>

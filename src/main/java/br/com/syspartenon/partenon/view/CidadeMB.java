@@ -7,6 +7,7 @@ import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.frameworkdemoiselle.util.Parameter;
 import br.com.syspartenon.partenon.business.CidadeBC;
 import br.com.syspartenon.partenon.domain.Cidade;
+import br.com.syspartenon.partenon.util.JsfUtil;
 import java.util.List;
 import javax.inject.Inject;
 import org.primefaces.event.SelectEvent;
@@ -67,8 +68,17 @@ public class CidadeMB {
         return "/cidade_listar.jsf?faces-redirect=true";
     }
     
-    public String handleSelect(SelectEvent e){
-        return "/cidade_adicionar.jsf?faces-redirect=true&id=" + ((Cidade) e.getObject()).getCddId();
+    public void handleSelect(SelectEvent e){
+        try {
+            //new NavigationHandlerImpl().handleNavigation(FacesContext.getCurrentInstance(), null, null);
+            JsfUtil.redirect("cidade_adicionar.jsf?faces-redirect=true&id=" + ((Cidade) e.getObject()).getCddId());
+        } catch (Exception ex) {
+            messageContext.add(ex.getMessage(), SeverityType.FATAL);
+        }
+    }
+    
+    public List<Cidade> filtrarPorNome(String nome){
+        return business.filtrarPorNome(nome);
     }
     
 }

@@ -5,12 +5,13 @@
     <ui:define name="body">
         <h:form id="frm">
             
-            <p:dialog header="Pesquisa de Cidades" widgetVar="dlgCidade">
+            <p:dialog header="Pesquisa de Cidades" widgetVar="dlgCidade"
+                      dynamic="true">
                 <p:dataTable value="#{cidadeMB.list}" var="cidade"
                              selectionMode="single"
                              selection="#{entidadeMB.bean.endereco.cidade}"
-                             onRowSelectUpdate="cidade"
-                             onRowSelectComplete="dlgCidade.hide()">
+                             rowKey="#{cidade.cddId}">
+                    <p:ajax event="rowSelect" update=":frm:cidade" oncomplete="dlgCidade.hide()" />
                     <p:column headerText="ID">
                         <h:outputText value="#{cidade.cddId}"/>
                     </p:column>
@@ -23,12 +24,12 @@
                 </p:dataTable>
             </p:dialog>
             
-            <p:dialog header="Pesquisa de Categorias de Entidades" widgetVar="dlgEntidadeCategorias">
+            <p:dialog header="Pesquisa de Categorias de Entidades" widgetVar="dlgEntidadeCategorias"
+                      dynamic="true">
                 <p:dataTable value="#{entidadeCategoriaMB.list}" var="ec"
                              selectionMode="single"
-                             selection="#{entidadeMB.novaEntidadeCategoria}"
-                             onRowSelectUpdate="listEntidadeCategoria"
-                             onRowSelectComplete="dlgEntidadeCategorias.hide()">
+                             selection="#{entidadeMB.novaEntidadeCategoria}">
+                    <p:ajax event="rowSelect" update=":frm:listEntidadeCategoria" oncomplete="dlgEntidadeCategorias.hide()" />
                     <p:column headerText="ID">
                         <h:outputText value="#{ec.encId}"/>
                     </p:column>
@@ -41,7 +42,6 @@
             <h:panelGrid columns="2" style="width: 100%;" columnClasses="sidebar-modulo,conteudo-modulo">
                 <p:menu>
                     <p:menuitem value="Dados Gerais" url="/entidade_dados_gerais.jsf?id=#{entidadeMB.bean.entId}" rendered="#{entidadeMB.bean.entId != null}"/>
-                    <p:menuitem value="Locais" url="/evento_locais.jsf?id=#{entidadeMB.bean.entId}" rendered="#{entidadeMB.bean.entId != null}"/>
                 </p:menu>
                 
                 
@@ -49,7 +49,7 @@
                     <p:toolbar>
                         <p:toolbarGroup>
                             <p:commandButton action="/entidade_listar.jsf?faces-redirect=true" image="ui-icon ui-icon-arrowthick-1-w" value="Voltar" />
-                            <p:commandButton value="Salvar" image="ui-icon ui-icon-disk" action="#{entidadeMB.salvar()}" update="frm,messages" />
+                            <p:commandButton value="Salvar" image="ui-icon ui-icon-disk" action="#{entidadeMB.salvar()}" update=":frm" />
                             <p:commandButton action="/entidade_dados_gerais.jsf?faces-redirect=true" image="ui-icon ui-icon-plusthick" value="Nova Entidade" />
                         </p:toolbarGroup>
                     </p:toolbar>
@@ -76,7 +76,7 @@
                                 <f:facet name="header">
                                     <p:button value="" image="ui-icon ui-icon-search" onclick="dlgEntidadeCategorias.show(); return false;" />
                                     <h:outputText value="#{entidadeMB.novaEntidadeCategoria.encDescricao}" />
-                                    <p:commandButton value="" image="ui-icon ui-icon-check" action="#{entidadeMB.adicionaCategoria()}" update="frm,messages" />
+                                    <p:commandButton value="" image="ui-icon ui-icon-check" action="#{entidadeMB.adicionaCategoria()}" update=":frm" />
                                 </f:facet>
                                 <p:column headerText="Categorias">
                                     <h:outputText value="#{ec.encDescricao}" />

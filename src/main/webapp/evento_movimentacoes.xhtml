@@ -14,7 +14,7 @@
                         <p:toolbarGroup>
                             <p:commandButton action="/evento_listar.jsf?faces-redirect=true" image="ui-icon ui-icon-arrowthick-1-w" value="Voltar" />
                             <p:commandButton action="/evento_dados_gerais.jsf?faces-redirect=true" image="ui-icon ui-icon-plusthick" value="Novo Evento" />
-                            <p:commandButton action="#{movimentacaoMB.novaMovimentacao()}" oncomplete="dlgNovaMovimentacao.show()" update="dlgNovaMovimentacaoDisplay"  image="ui-icon ui-icon-plusthick" value="Nova Movimentação" />
+                            <p:commandButton action="#{movimentacaoMB.novaMovimentacao()}" oncomplete="dlgNovaMovimentacao.show()" update=":frm:dlgNovaMovimentacaoDisplay"  image="ui-icon ui-icon-plusthick" value="Nova Movimentação" />
                         </p:toolbarGroup>
                     </p:toolbar>
                     
@@ -42,10 +42,10 @@
                             <p:column>
                                 <p:commandButton image="ui-icon ui-icon-minusthick" title="Remover Movimentação" 
                                                  action="#{movimentacaoMB.excluir(mov)}"
-                                                 update="frm,messages"/>
+                                                 update=":frm"/>
                                 <p:commandButton image="ui-icon ui-icon-pencil" title="Editar Movimentação" 
                                                  oncomplete="dlgNovaMovimentacao.show()"
-                                                 update="dlgNovaMovimentacaoDisplay">
+                                                 update=":frm:dlgNovaMovimentacaoDisplay">
                                     <f:setPropertyActionListener target="#{movimentacaoMB.movimentacao}" value="#{mov}" />
                                 </p:commandButton>
                             </p:column>
@@ -74,12 +74,15 @@
                     </h:selectOneMenu>
                     
                     <h:outputLabel value="Valor" for="valor" />
-                    <p:inputText value="#{movimentacaoMB.movimentacao.mvmValor}" id="valor" size="15" style="text-align: right;"/>
+                    <p:inputText value="#{movimentacaoMB.movimentacao.mvmValor}" 
+                                 id="valor" size="15" style="text-align: right;"                                 >
+                        <p:ajax event="change" process="@this" update="@this" />
+                    </p:inputText>
                     
                     <p:commandButton value="Salvar" image="ui-icon ui-icon-check" 
                                      action="#{movimentacaoMB.salvar()}"
                                      oncomplete="dlgNovaMovimentacao.hide()"
-                                     update="frm,messages"/>
+                                     update=":frm"/>
                 </h:panelGrid>
             </p:dialog>
         </h:form>

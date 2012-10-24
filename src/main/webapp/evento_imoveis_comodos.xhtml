@@ -5,29 +5,30 @@
 
     <ui:define name="body">
         <h:form id="frm" prependId="false">
-            <p:dialog header="Imagens do Cômodo" widgetVar="dlgImagens" width="500">
+            
+            <p:dialog header="Imagens do Cômodo" widgetVar="dlgImagens" width="500" height="450">
                 <h:panelGroup id="dlgImagensDisplay">
                     <p:fileUpload fileUploadListener="#{comodoMB.handleUpload}" 
                                   multiple="true" 
                                   label="Procurar Imagens..." 
-                                  allowTypes="*.jpg;*.bmp;*.png;*.gif" 
-                                  description="Selecione as Imagens"
-                                  update="imagens"/>
-                    <p:dataTable value="#{comodoMB.imageList}" var="image" id="imagens">
-                        <p:column>
+                                  allowTypes="/(\.|\/)(gif|jpe?g|png|bmp)$/"
+                                  update=":frm:imagens"
+                                  mode="advanced"/>
+                    <p:dataGrid value="#{comodoMB.imageList}" var="image" id="imagens"
+                                columns="3">
+                        <h:panelGroup>
+                            
                             <p:lightBox>
                                 <h:outputLink value="images/#{image.imgNome}">
                                     <h:graphicImage value="/images/thumbnails/#{image.imgNome}" title="#{image.imgNome}" alt="#{image.imgNome}" />
                                 </h:outputLink>
                             </p:lightBox>
-                        </p:column>
-                        <p:column>
-                            <p:commandButton image="ui-icon ui-icon-minusthick" title="Remover Imagem" 
-                                             action="#{comodoMB.excluirImagem(image)}"
-                                             update="dlgImagensDisplay,messages"/>
-                        </p:column>
-                    </p:dataTable>
-                    
+                            <p:commandLink value="Remover" title="Remover Imagem" 
+                                           action="#{comodoMB.excluirImagem(image)}"
+                                           update=":frm:dlgImagensDisplay"
+                                           style="display: block; text-align: center;"/>
+                        </h:panelGroup>
+                    </p:dataGrid>
                 </h:panelGroup>
 
                 <p:spacer height="8" style="display:block;"/>
@@ -39,8 +40,8 @@
                 <p:dataTable value="#{comodoStatusMB.list}" var="status"
                              selectionMode="single"
                              selection="#{comodoMB.comodo.comodoStatus}"
-                             onRowSelectUpdate="status"
-                             onRowSelectComplete="dlgStatus.hide()">
+                             rowKey="#{status.cmsId}">
+                    <p:ajax event="rowSelect" oncomplete="dlgStatus.hide()" update=":frm:status" />
                     <p:column headerText="ID">
                         <h:outputText value="#{status.cmsId}"/>
                     </p:column>
@@ -70,7 +71,7 @@
                 <p:commandButton value="Inserir" image="ui-icon ui-icon-check" 
                                  action="#{comodoMB.salvar()}"
                                  oncomplete="dlgNovoComodo.hide()"
-                                 update="frm,messages"/>
+                                 update=":frm"/>
             </p:dialog>
 
             <h:panelGrid columns="2" style="width: 100%;" columnClasses="sidebar-modulo,conteudo-modulo">
@@ -79,10 +80,10 @@
                 <h:panelGroup>
                     <p:toolbar>
                         <p:toolbarGroup>
-                            <p:commandButton action="/evento_listar.jsf?faces-redirect=true" image="ui-icon ui-icon-arrowthick-1-w" value="Voltar" />
+                            <p:commandButton image="ui-icon ui-icon-arrowthick-1-w" value="Voltar para imóveis" 
+                                             action="#{comodoMB.visualizarImovel()}"/>
                             <p:commandButton action="/evento_dados_gerais.jsf?faces-redirect=true" image="ui-icon ui-icon-plusthick" value="Novo Evento" />
                             <p:button value="Novo Cômodo" onclick="dlgNovoComodo.show(); return false;" image="ui-icon ui-icon-plusthick"/>
-                            <p:commandButton value="Visualizar Imóveis" image="ui-icon ui-icon-home" action="#{comodoMB.visualizarImovel()}"/>
                         </p:toolbarGroup>
                     </p:toolbar>
 
@@ -104,11 +105,11 @@
                             </p:column>
                             <p:column>
                                 <p:commandButton image="ui-icon ui-icon-image" oncomplete="dlgImagens.show()"
-                                                 update="dlgImagensDisplay">
+                                                 update=":frm:dlgImagensDisplay">
                                     <f:setPropertyActionListener target="#{comodoMB.comodo}" value="#{comodo}" />
                                 </p:commandButton>
                                 <p:commandButton image="ui-icon ui-icon-minusthick" action="#{comodoMB.excluir(comodo)}" 
-                                                 update="frm,messages"/>
+                                                 update=":frm"/>
                             </p:column>
                         </p:dataTable>
                     </p:fieldset>

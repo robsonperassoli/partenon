@@ -58,15 +58,15 @@
                 <p:commandButton value="Inserir" image="ui-icon ui-icon-check" 
                                  action="#{eventoMB.adicionarProgramacao()}"
                                  oncomplete="dlgNovaProgramacao.hide()"
-                                 update="frm,messages"/>
+                                 update=":frm"/>
             </p:dialog>
             
             <p:dialog header="Locais do Evento" widgetVar="dlgLocais" rendered="#{eventoMB.bean.localList.size() > 0}">
                 <p:dataTable value="#{eventoMB.bean.localList}" var="local"
                              selectionMode="single"
                              selection="#{eventoMB.novoLocalProgramacao}"
-                             onRowSelectUpdate="local"
-                             onRowSelectComplete="dlgLocais.hide()">
+                             rowKey="#{local.lclId}">
+                    <p:ajax event="rowSelect" oncomplete="dlgLocais.hide()" update=":frm:local" />
                     <p:column headerText="ID">
                         <h:outputText value="#{local.lclId}"/>
                     </p:column>
@@ -103,7 +103,7 @@
                             </p:column>
                             <p:column>
                                 <p:commandButton image="ui-icon ui-icon-minusthick" action="#{eventoMB.removerProgramacao(programacao)}" 
-                                                 update="frm,messages"/>
+                                                 update=":frm"/>
                             </p:column>
                         </p:dataTable>
                     </p:fieldset>

@@ -39,7 +39,7 @@
                 <p:commandButton value="Inserir" image="ui-icon ui-icon-check" 
                              action="#{eventoMB.adicionarPacote()}"
                              oncomplete="dlgNovoPacote.hide()"
-                             update="frm,messages"/>
+                             update=":frm"/>
                 
                 
             </p:dialog>
@@ -48,8 +48,8 @@
                 <p:dataTable value="#{eventoMB.bean.programacaoList}" var="prog"
                              selectionMode="single"
                              selection="#{eventoMB.novaProgramacao}"
-                             onRowSelectUpdate="programacao"
-                             onRowSelectComplete="dlgProgramacoes.hide()">
+                             rowKey="#{prog.prmId}">
+                    <p:ajax event="rowSelect" oncomplete="dlgProgramacoes.hide()" update=":frm:programacao" />
                     <p:column headerText="ID">
                         <h:outputText value="#{prog.prmId}"/>
                     </p:column>
@@ -88,7 +88,7 @@
                                 <p:commandButton image="ui-icon ui-icon-minusthick" title="Remover Pacote"
                                                  action="#{eventoMB.removerPacote(pacote)}"
                                                  onclick="return false;"
-                                                 update="frm,messages"/>
+                                                 update=":frm"/>
                             </p:column>
                         </p:dataTable>
                     </p:fieldset>

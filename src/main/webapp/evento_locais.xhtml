@@ -5,31 +5,12 @@
     <ui:define name="body">
         
         <h:form id="frm" prependId="false">
-            
-            <p:dialog header="Pesquisa de Cidades" widgetVar="dlgCidade">
-                <p:dataTable value="#{cidadeMB.list}" var="cidade"
-                             selectionMode="single"
-                             selection="#{localMB.local.endereco.cidade}"
-                             onRowSelectUpdate="cidade"
-                             onRowSelectComplete="dlgCidade.hide()">
-                    <p:column headerText="ID">
-                        <h:outputText value="#{cidade.cddId}"/>
-                    </p:column>
-                    <p:column headerText="Nome">
-                        <h:outputText value="#{cidade.cddNome}"/>
-                    </p:column>
-                    <p:column headerText="UF">
-                        <h:outputText value="#{cidade.estado.estUf}"/>
-                    </p:column>
-                </p:dataTable>
-            </p:dialog>
-            
             <p:dialog header="Locais do Evento" widgetVar="dlgLocais" rendered="#{localMB.list.size() > 0}">
                 <p:dataTable value="#{localMB.list}" var="lcl"
                              selectionMode="single"
                              selection="#{localMB.local.lclPai}"
-                             onRowSelectUpdate="local_pai"
-                             onRowSelectComplete="dlgLocais.hide()">
+                             rowKey="#{lcl.lclId}">
+                    <p:ajax event="rowSelect" oncomplete="dlgLocais.hide()" update=":frm:local_pai" />
                     <p:column headerText="ID">
                         <h:outputText value="#{lcl.lclId}"/>
                     </p:column>
@@ -47,7 +28,7 @@
                         <p:toolbarGroup>
                             <p:commandButton action="/evento_listar.jsf?faces-redirect=true" image="ui-icon ui-icon-arrowthick-1-w" value="Voltar" />
                             <p:commandButton action="/evento_dados_gerais.jsf?faces-redirect=true" image="ui-icon ui-icon-plusthick" value="Novo Evento" />
-                            <p:commandButton action="#{localMB.novoLocal()}" oncomplete="dlgNovoLocal.show(); return false;" update="dlgNovoLocalDisplay" image="ui-icon ui-icon-plusthick" value="Novo Local" />
+                            <p:commandButton action="#{localMB.novoLocal()}" oncomplete="dlgNovoLocal.show(); return false;" update=":frm:dlgNovoLocalDisplay" image="ui-icon ui-icon-plusthick" value="Novo Local" />
                         </p:toolbarGroup>
                     </p:toolbar>
                     
@@ -78,7 +59,7 @@
                                 </p:commandButton>
                                 <p:commandButton image="ui-icon ui-icon-pencil" title="Editar Local" 
                                                  oncomplete="dlgNovoLocal.show()"
-                                                 update="dlgNovoLocalDisplay">
+                                                 update=":frm:dlgNovoLocalDisplay">
                                     <f:setPropertyActionListener target="#{localMB.local}" value="#{local}" />
                                 </p:commandButton>
                             </p:column>
@@ -115,15 +96,21 @@
                     <p:inputMask mask="99999-999" value="#{localMB.local.endereco.endCep}" id="cep" size="10"/>
                     
                     <h:outputLabel value="Cidade" for="cidade" />
-                    <h:panelGrid columns="2" id="cidade">
-                        <h:outputText value="#{localMB.local.endereco.cidade.cddNome}"/>
-                        <p:button image="ui-icon ui-icon-search" onclick="dlgCidade.show(); return false;" />
-                    </h:panelGrid>
+                    <p:autoComplete value="#{localMB.local.endereco.cidade}"
+                                    id="cidade"
+                                    completeMethod="#{cidadeMB.filtrarPorNome}"
+                                    forceSelection="true"
+                                    dropdown="true"
+                                    var="cidade"
+                                    itemLabel="#{cidade.cddNome}"
+                                    itemValue="#{cidade}"
+                                    converter="cidadeConverter"
+                                    size="50"/>
                     
                     <p:commandButton value="Inserir" image="ui-icon ui-icon-check" 
                                      action="#{localMB.salvar()}"
                                      oncomplete="dlgNovoLocal.hide()"
-                                     update=":frm,:messages"/>
+                                     update=":frm"/>
                 </h:panelGrid>
             </p:dialog>
         </h:form>
