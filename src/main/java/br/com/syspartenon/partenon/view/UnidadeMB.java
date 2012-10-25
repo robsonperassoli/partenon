@@ -7,7 +7,10 @@ import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.frameworkdemoiselle.util.Parameter;
 import br.com.syspartenon.partenon.business.UnidadeBC;
 import br.com.syspartenon.partenon.domain.Unidade;
+import br.com.syspartenon.partenon.util.JsfUtil;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import org.primefaces.event.SelectEvent;
 
@@ -67,7 +70,11 @@ public class UnidadeMB {
         return "/unidade_listar.jsf?faces-redirect=true";
     }
 
-    public String handleSelect(SelectEvent e) {
-        return "/unidade_adicionar.jsf?faces-redirect=true&id=" + ((Unidade) e.getObject()).getUndId();
+    public void handleSelect(SelectEvent e) {
+        try {
+            JsfUtil.redirect("unidade_adicionar.jsf?id=" + ((Unidade) e.getObject()).getUndId());
+        } catch (Exception ex) {
+            messageContext.add(ex.getMessage(), SeverityType.FATAL);
+        }
     }
 }

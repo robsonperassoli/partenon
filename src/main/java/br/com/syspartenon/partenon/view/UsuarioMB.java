@@ -7,7 +7,10 @@ import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.frameworkdemoiselle.util.Parameter;
 import br.com.syspartenon.partenon.business.UsuarioBC;
 import br.com.syspartenon.partenon.domain.Usuario;
+import br.com.syspartenon.partenon.util.JsfUtil;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import org.primefaces.event.SelectEvent;
 
@@ -64,8 +67,12 @@ public class UsuarioMB {
         }
     }
     
-    public String handleSelect(SelectEvent e){
-        return "/usuario_adicionar.jsf?faces-redirect=true&id=" + ((Usuario) e.getObject()).getUsuId();
+    public void handleSelect(SelectEvent e){
+        try {
+            JsfUtil.redirect("usuario_adicionar.jsf?faces-redirect=true&id=" + ((Usuario) e.getObject()).getUsuId());
+        } catch (Exception ex) {
+            messageContext.add(ex.getMessage(), SeverityType.FATAL);
+        }
     }
     
 }

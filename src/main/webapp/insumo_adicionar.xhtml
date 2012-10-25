@@ -7,8 +7,8 @@
             <p:toolbar>
                 <p:toolbarGroup>
                     <p:commandButton value="Voltar" action="/insumo_listar.jsf?faces-redirect=true" ajax="false" image="ui-icon ui-icon-arrowthick-1-w"/>
-                    <p:commandButton value="Salvar" action="#{insumoMB.salvar()}" image="ui-icon ui-icon-disk" update="messages, frm"/>
-                    <p:commandButton value="Excluir" action="#{insumoMB.excluir()}" image="ui-icon ui-icon-minusthick" update="messages, frm"/>
+                    <p:commandButton value="Salvar" action="#{insumoMB.salvar()}" image="ui-icon ui-icon-disk" update=":frm"/>
+                    <p:commandButton value="Excluir" action="#{insumoMB.excluir()}" image="ui-icon ui-icon-minusthick" update=":frm"/>
                 </p:toolbarGroup>
             </p:toolbar>
 
@@ -17,8 +17,8 @@
                 <p:dataTable value="#{insumoCategoriaMB.list}" var="categoria"
                              selectionMode="single"
                              selection="#{insumoMB.bean.insumoCategoria}"
-                             onRowSelectUpdate="categoria"
-                             onselectComplete="dlgInsumoCategoria.hide()">
+                             rowKey="#{categoria.ictId}">
+                    <p:ajax event="rowSelect" update=":frm:categoria" oncomplete="dlgInsumoCategoria.hide()" />
                     <p:column headerText="ID">
                         <h:outputText value="#{categoria.ictId}"/>
                     </p:column>
@@ -36,8 +36,8 @@
                 <p:dataTable value="#{unidadeMB.list}" var="unidade"
                              selectionMode="single"
                              selection="#{insumoMB.bean.unidade}"
-                             onRowSelectUpdate="unidade"
-                             onselectComplete="dlgUnidade.hide()">
+                             rowKey="#{unidade.undId}">
+                    <p:ajax event="rowSelect" update=":frm:unidade" oncomplete="dlgUnidade.hide()" />
                     <p:column headerText="ID">
                         <h:outputText value="#{unidade.undId}"/>
                     </p:column>
@@ -51,7 +51,7 @@
             <p:panel>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="ID" for="id"/>
-                    <p:inputText value="#{insumoMB.bean.insId}" id="id" disabled="true" />
+                    <h:outputText value="#{insumoMB.bean.insId}" id="id" />
 
                     <h:outputLabel value="Categoria" for="categoria"/>
                     <h:panelGrid columns="2" id="categoria">

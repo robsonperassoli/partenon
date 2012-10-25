@@ -5,7 +5,7 @@
     <ui:define name="body">
         <h:form id="frm" prependId="false">
             <p:dialog header="Adicionar Descrição" widgetVar="dlgDescricao" width="500">
-                <h:panelGrid columns="2">
+                <h:panelGrid columns="2" id="dlgDescricaoDisplay">
                     <h:outputLabel value="Descrição" for="descricao" />
                     <p:inputText value="#{bannerMB.banner.banDescricao}" id="descricao" size="60"/>
                 </h:panelGrid>
@@ -14,7 +14,7 @@
                 <p:commandButton value="Salvar" image="ui-icon ui-icon-check" 
                                  action="#{bannerMB.salvar()}"
                                  oncomplete="dlgDescricao.hide()"
-                                 update="frm,messages"/>
+                                 update=":frm"/>
             </p:dialog>
             
             <h:panelGrid columns="2" style="width: 100%;" columnClasses="sidebar-modulo,conteudo-modulo">
@@ -35,8 +35,7 @@
                         <p:fileUpload fileUploadListener="#{bannerMB.handleUpload}" 
                                       multiple="true"
                                       label="Procurar Imagens..." 
-                                      allowTypes="*.jpg;*.bmp;*.png;*.gif" 
-                                      description="Selecione as Imagens"
+                                      allowTypes="/(\.|\/)(gif|jpe?g|png|bmp)$/"
                                       update="listBanners"/>
 
                         
@@ -52,11 +51,11 @@
                             </p:column>
                             <p:column>
                                 <p:commandButton image="ui-icon ui-icon-pencil" oncomplete="dlgDescricao.show()"
-                                                 update="dlgDescricaoDisplay">
+                                                 update=":frm:dlgDescricaoDisplay">
                                     <f:setPropertyActionListener target="#{bannerMB.banner}" value="#{banner}" />
                                 </p:commandButton>
                                 <p:commandButton image="ui-icon ui-icon-minusthick" action="#{bannerMB.excluir(banner)}" 
-                                                 update="frm,messages"/>
+                                                 update=":frm"/>
                             </p:column>
                         </p:dataTable>
                     </p:fieldset>

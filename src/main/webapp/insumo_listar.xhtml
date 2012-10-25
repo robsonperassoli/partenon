@@ -12,7 +12,8 @@
 
             <p:dataTable value="#{insumoMB.list}" var="insumo"
                          selectionMode="single"
-                         rowSelectListener="#{insumoMB.handleSelect}">
+                         rowKey="#{insumo.insId}">
+                <p:ajax event="rowSelect" listener="#{insumoMB.handleSelect}" />
                 <p:column headerText="Id">
                     <h:outputText value="#{insumo.insId}" />
                 </p:column>

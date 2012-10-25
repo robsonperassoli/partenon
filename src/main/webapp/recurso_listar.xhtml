@@ -12,7 +12,8 @@
             
             <p:dataTable value="#{recursoMB.list}" var="recurso"
                          selectionMode="single"
-                         rowSelectListener="#{recursoMB.handleSelect}">
+                         rowKey="#{recurso.recId}">
+                <p:ajax event="rowSelect" listener="#{recursoMB.handleSelect}" />
                 <p:column headerText="Id">
                     <h:outputText value="#{recurso.recId}" />
                 </p:column>

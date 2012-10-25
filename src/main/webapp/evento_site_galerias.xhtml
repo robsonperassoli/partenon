@@ -19,7 +19,7 @@
                 <p:commandButton value="Salvar" image="ui-icon ui-icon-check" 
                                  action="#{galeriaMB.salvar()}"
                                  oncomplete="dlgNovaGaleria.hide()"
-                                 update="frm,messages"/>
+                                 update=":frm"/>
             </p:dialog>
 
             <h:panelGrid columns="2" style="width: 100%;" columnClasses="sidebar-modulo,conteudo-modulo">
@@ -30,7 +30,7 @@
                         <p:toolbarGroup>
                             <p:commandButton action="/evento_listar.jsf?faces-redirect=true" image="ui-icon ui-icon-arrowthick-1-w" value="Voltar" />
                             <p:commandButton action="/evento_dados_gerais.jsf?faces-redirect=true" image="ui-icon ui-icon-plusthick" value="Novo Evento" />
-                            <p:button value="Nova Galeria" onclick="dlgNovaGaleria.show(); return false;" image="ui-icon ui-icon-plusthick"/>
+                            <p:button value="Nova Galeria" onclick="dlgNovaGaleria.show()" image="ui-icon ui-icon-plusthick"/>
                         </p:toolbarGroup>
                     </p:toolbar>
 
@@ -54,7 +54,7 @@
                                                  action="#{galeriaMB.adicionarFotos(galeria)}" 
                                                  title="Fotos desta Galeria"/>
                                 <p:commandButton image="ui-icon ui-icon-minusthick" action="#{galeriaMB.excluir(galeria)}" 
-                                                 update="frm,messages"
+                                                 update=":frm"
                                                  title="Remover Galerias"/>
                             </p:column>
                         </p:dataTable>

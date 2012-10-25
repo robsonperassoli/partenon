@@ -35,7 +35,7 @@ public class Operacao implements Serializable {
     @ManyToOne(cascade=CascadeType.ALL)
     private Recurso recurso; 
 
-    @ManyToMany(cascade= CascadeType.ALL)
+    @ManyToMany(cascade=CascadeType.REFRESH)
     @JoinTable(name="USUARIO_GRUPO_OPERACAO",
             joinColumns=@JoinColumn(name="OPE_ID"),
             inverseJoinColumns=@JoinColumn(name="USG_ID")

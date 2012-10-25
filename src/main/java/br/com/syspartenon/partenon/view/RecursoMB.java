@@ -8,7 +8,10 @@ import br.gov.frameworkdemoiselle.util.Parameter;
 import br.com.syspartenon.partenon.business.RecursoBC;
 import br.com.syspartenon.partenon.domain.Operacao;
 import br.com.syspartenon.partenon.domain.Recurso;
+import br.com.syspartenon.partenon.util.JsfUtil;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import org.primefaces.event.SelectEvent;
 
@@ -92,8 +95,12 @@ public class RecursoMB {
         }
     }
     
-    public String handleSelect(SelectEvent e){
-        return "/recurso_adicionar.jsf?faces-redirect=true&id=" + ((Recurso) e.getObject()).getRecId();
+    public void handleSelect(SelectEvent e){
+        try {
+            JsfUtil.redirect("recurso_adicionar.jsf?faces-redirect=true&id=" + ((Recurso) e.getObject()).getRecId());
+        } catch (Exception ex) {
+            messageContext.add(ex.getMessage(), SeverityType.FATAL);
+        }
     }
     
 }

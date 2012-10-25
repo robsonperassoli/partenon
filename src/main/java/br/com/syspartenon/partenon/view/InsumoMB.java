@@ -7,7 +7,10 @@ import br.gov.frameworkdemoiselle.transaction.Transactional;
 import br.gov.frameworkdemoiselle.util.Parameter;
 import br.com.syspartenon.partenon.business.InsumoBC;
 import br.com.syspartenon.partenon.domain.Insumo;
+import br.com.syspartenon.partenon.util.JsfUtil;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import org.primefaces.event.SelectEvent;
 
@@ -67,8 +70,12 @@ public class InsumoMB {
         return "/insumo_listar.jsf?faces-redirect=true";
     }
     
-    public String handleSelect(SelectEvent e){
-        return "/insumo_adicionar.jsf?faces-redirect=true&id=" + ((Insumo) e.getObject()).getInsId();
+    public void handleSelect(SelectEvent e){
+        try {
+            JsfUtil.redirect("insumo_adicionar.jsf?faces-redirect=true&id=" + ((Insumo) e.getObject()).getInsId());
+        } catch (Exception ex) {
+            messageContext.add(ex.getMessage(), SeverityType.FATAL);
+        }
     }
     
 }

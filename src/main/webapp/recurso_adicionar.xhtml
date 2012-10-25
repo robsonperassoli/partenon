@@ -7,14 +7,14 @@
             <p:toolbar>
                 <p:toolbarGroup>
                     <p:commandButton value="Voltar" action="/recurso_listar.jsf?faces-redirect=true" ajax="false" image="ui-icon ui-icon-arrowthick-1-w"/>
-                    <p:commandButton value="Salvar" action="#{recursoMB.salvar()}" image="ui-icon ui-icon-disk" update="messages, frm"/>
+                    <p:commandButton value="Salvar" action="#{recursoMB.salvar()}" image="ui-icon ui-icon-disk" update=":frm"/>
                 </p:toolbarGroup>
             </p:toolbar>
             
             <p:panel>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="ID" for="id"/>
-                    <p:inputText value="#{recursoMB.bean.recId}" id="id" />
+                    <h:outputText value="#{recursoMB.bean.recId}" id="id" />
                     
                     <h:outputLabel value="Descrição" for="descricao"/>
                     <p:inputText value="#{recursoMB.bean.recDescricao}" id="descricao" />
@@ -24,8 +24,10 @@
                     <f:facet name="header">
                         <h:outputLabel value="Adicionar Operação" for="operacao" />
                         <p:inputText value="#{recursoMB.operacao.opeDescricao}" id="operacao" />
-                        <p:commandButton value="Adicionar Operação" image="ui-icon ui-icon-check" action="#{recursoMB.adicionarOperacao()}"
-                                         update="frm,messages" />
+                        <p:commandButton value="Adicionar Operação" 
+                                         image="ui-icon ui-icon-check" 
+                                         action="#{recursoMB.adicionarOperacao()}"
+                                         update=":frm" />
                     </f:facet>
                     <p:column headerText="Nome da Operação">
                         <h:outputText value="#{operacao.opeDescricao}" />

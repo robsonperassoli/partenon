@@ -3,7 +3,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
 
     <ui:define name="body">
-        <h:form>
+        <h:form id="frm" prependId="false">
             <p:panel>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="Servidor SMTP" for="smtpServer"/>
@@ -15,7 +15,7 @@
                     <h:outputLabel value="Senha SMTP" for="smtpPassword"/>
                     <p:inputText value="#{configuracaoMB.bean.conSmtpPassword}" id="smtpPassword" size="25" />
 
-                    <p:commandButton image="ui-icon ui-icon-disk" value="Salvar" update="messages,frm" 
+                    <p:commandButton image="ui-icon ui-icon-disk" value="Salvar" update=":frm" 
                                      actionListener="#{configuracaoMB.salvar()}"/>
                 </h:panelGrid>
             </p:panel>

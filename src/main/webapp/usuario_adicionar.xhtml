@@ -6,8 +6,8 @@
         <h:form id="frm">
             <p:toolbar>
                 <p:toolbarGroup>
-                    <p:commandButton value="Voltar" action="/usuario_listar.jsf?faces-redirect=true" ajax="false" image="ui-icon ui-icon-arrowthick-1-w"/>
-                    <p:commandButton value="Salvar" action="#{usuarioMB.salvar()}" image="ui-icon ui-icon-disk" update="messages, frm"/>
+                    <p:commandButton value="Voltar" action="/usuario_listar.jsf?faces-redirect=true" ajax="false" icon="ui-icon ui-icon-arrowthick-1-w"/>
+                    <p:commandButton value="Salvar" action="#{usuarioMB.salvar()}" image="ui-icon ui-icon-disk" update=":frm"/>
                 </p:toolbarGroup>
             </p:toolbar>
             
@@ -16,8 +16,8 @@
                 <p:dataTable value="#{usuarioGrupoMB.list}" var="ug"
                              selectionMode="single"
                              selection="#{usuarioMB.bean.usuarioGrupo}"
-                             onRowSelectUpdate="grupo"
-                             onselectComplete="dlgUsuarioGrupo.hide()">
+                             rowKey="#{ug.usgId}">
+                    <p:ajax event="rowSelect" update=":frm:grupo" oncomplete="dlgUsuarioGrupo.hide()" />
                     <p:column headerText="ID">
                         <h:outputText value="#{ug.usgId}"/>
                     </p:column>
@@ -30,7 +30,7 @@
             <p:panel>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="ID" for="id"/>
-                    <p:inputText value="#{usuarioMB.bean.usuId}" id="id" />
+                    <h:outputText value="#{usuarioMB.bean.usuId}" id="id" />
                     
                     <h:outputLabel value="Login" for="login"/>
                     <p:inputText value="#{usuarioMB.bean.usuLogin}" id="login" />

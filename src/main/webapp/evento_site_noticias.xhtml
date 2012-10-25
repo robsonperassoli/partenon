@@ -14,7 +14,7 @@
                         <p:toolbarGroup>
                             <p:commandButton action="/evento_listar.jsf?faces-redirect=true" image="ui-icon ui-icon-arrowthick-1-w" value="Voltar" />
                             <p:commandButton action="/evento_dados_gerais.jsf?faces-redirect=true" image="ui-icon ui-icon-plusthick" value="Novo Evento" />
-                            <p:commandButton action="#{noticiaMB.novaNoticia()}" oncomplete="dlgNovaNoticia.show(); return false;" update="dlgNovaNoticiaDisplay" image="ui-icon ui-icon-plusthick" value="Nova Notícia" />
+                            <p:commandButton action="#{noticiaMB.novaNoticia()}" oncomplete="dlgNovaNoticia.show()" update=":frm:dlgNovaNoticiaDisplay" image="ui-icon ui-icon-plusthick" value="Nova Notícia" />
                         </p:toolbarGroup>
                     </p:toolbar>
                     
@@ -31,10 +31,10 @@
                             <p:column>
                                 <p:commandButton image="ui-icon ui-icon-minusthick" title="Remover Notícia" 
                                                  action="#{noticiaMB.excluir(ntc)}"
-                                                 update="frm,messages"/>
+                                                 update=":frm"/>
                                 <p:commandButton image="ui-icon ui-icon-pencil" title="Editar Notícia" 
                                                  oncomplete="dlgNovaNoticia.show()"
-                                                 update="dlgNovaNoticiaDisplay">
+                                                 update=":frm:dlgNovaNoticiaDisplay">
                                     <f:setPropertyActionListener target="#{noticiaMB.noticia}" value="#{ntc}" />
                                 </p:commandButton>
                             </p:column>
@@ -44,14 +44,13 @@
                 </h:panelGroup>
                 
             </h:panelGrid>
-            <p:dialog header="Nova Notícia" widgetVar="dlgNovaNoticia" width="650"
-                      onShow="editorConteudo.init()">
+            <p:dialog header="Nova Notícia" widgetVar="dlgNovaNoticia" width="650">
                 <h:panelGrid columns="2" id="dlgNovaNoticiaDisplay">
                     <h:outputLabel value="Título" for="titulo" />
                     <p:inputText value="#{noticiaMB.noticia.ntcTitulo}" id="titulo" size="50"/>
                     
                     <h:outputLabel value="Conteúdo" for="conteudo" />
-                    <p:editor value="#{noticiaMB.noticia.ntcConteudo}" id="conteudo" widgetVar="editorConteudo" lazy="true"/>
+                    <p:editor value="#{noticiaMB.noticia.ntcConteudo}" id="conteudo" widgetVar="editorConteudo"/>
                     
                     <h:outputLabel value="" for="" />
                     <h:panelGrid columns="3">
@@ -63,7 +62,7 @@
                     <p:commandButton value="Salvar" image="ui-icon ui-icon-check" 
                                      action="#{noticiaMB.salvar()}"
                                      oncomplete="dlgNovaNoticia.hide()"
-                                     update="frm,messages"/>
+                                     update=":frm"/>
                 </h:panelGrid>
             </p:dialog>
         </h:form>

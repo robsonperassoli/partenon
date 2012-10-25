@@ -9,6 +9,7 @@ import br.gov.frameworkdemoiselle.util.Parameter;
 import br.com.syspartenon.partenon.business.UsuarioGrupoBC;
 import br.com.syspartenon.partenon.domain.Operacao;
 import br.com.syspartenon.partenon.domain.UsuarioGrupo;
+import br.com.syspartenon.partenon.util.JsfUtil;
 import java.util.List;
 import javax.inject.Inject;
 import org.primefaces.event.SelectEvent;
@@ -81,13 +82,19 @@ public class UsuarioGrupoMB {
         
         if(!existe) {
             operacaoParaAdicionar.getUsuarioGrupos().add(bean);
-            operacaoBC.update(operacaoParaAdicionar);
+//            operacaoBC.update(operacaoParaAdicionar);
+            bean.getListOperacoes().add(operacaoParaAdicionar);
+            business.update(bean);
         } else
             messageContext.add("Operação já foi adicionada ao Grupo.", SeverityType.WARN);
     }
     
-    public String handleSelect(SelectEvent e){
-        return "/usuario_grupo_adicionar.jsf?faces-redirect=true&id=" + ((UsuarioGrupo) e.getObject()).getUsgId();
+    public void handleSelect(SelectEvent e){
+        try {
+            JsfUtil.redirect("usuario_grupo_adicionar.jsf?faces-redirect=true&id=" + ((UsuarioGrupo) e.getObject()).getUsgId());
+        } catch (Exception ex) {
+            messageContext.add(ex.getMessage(), SeverityType.FATAL);
+        }
     }
     
 }

@@ -12,7 +12,8 @@
             
             <p:dataTable value="#{usuarioGrupoMB.list}" var="grupo"
                          selectionMode="single"
-                         rowSelectListener="#{usuarioGrupoMB.handleSelect}">
+                         rowKey="#{grupo.usgId}">
+                <p:ajax event="rowSelect" listener="#{usuarioGrupoMB.handleSelect}" />
                 <p:column headerText="Id">
                     <h:outputText value="#{grupo.usgId}" />
                 </p:column>

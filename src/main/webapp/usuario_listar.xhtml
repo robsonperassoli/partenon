@@ -12,7 +12,8 @@
             
             <p:dataTable value="#{usuarioMB.list}" var="usuario"
                          selectionMode="single"
-                         rowSelectListener="#{usuarioMB.handleSelect}">
+                         rowKey="#{usuario.usuId}">
+                <p:ajax event="rowSelect" listener="#{usuarioMB.handleSelect}" />
                 <p:column headerText="Id">
                     <h:outputText value="#{usuario.usuId}" />
                 </p:column>

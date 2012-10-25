@@ -10,9 +10,11 @@
                 </p:toolbarGroup>
             </p:toolbar>
             
-            <p:dataTable value="#{unidadeMB.list}" var="unidade"
+            <p:dataTable value="#{unidadeMB.list}" 
+                         var="unidade"
                          selectionMode="single"
-                         rowSelectListener="#{unidadeMB.handleSelect}">
+                         rowKey="#{unidade.undId}">
+                <p:ajax event="rowSelect" listener="#{unidadeMB.handleSelect}" />
                 <p:column headerText="Id">
                     <h:outputText value="#{unidade.undId}" />
                 </p:column>

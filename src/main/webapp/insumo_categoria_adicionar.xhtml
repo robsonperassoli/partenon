@@ -7,8 +7,8 @@
             <p:toolbar>
                 <p:toolbarGroup>
                     <p:commandButton value="Voltar" action="/insumo_categoria_listar.jsf?faces-redirect=true" ajax="false" image="ui-icon ui-icon-arrowthick-1-w"/>
-                    <p:commandButton value="Salvar" action="#{insumoCategoriaMB.salvar()}" image="ui-icon ui-icon-disk" update="messages, frm"/>
-                    <p:commandButton value="Excluir" action="#{insumoCategoriaMB.excluir()}" image="ui-icon ui-icon-minusthick" update="messages, frm"/>
+                    <p:commandButton value="Salvar" action="#{insumoCategoriaMB.salvar()}" image="ui-icon ui-icon-disk" update=":frm"/>
+                    <p:commandButton value="Excluir" action="#{insumoCategoriaMB.excluir()}" image="ui-icon ui-icon-minusthick" update=":frm"/>
                 </p:toolbarGroup>
             </p:toolbar> 
             <p:panel>

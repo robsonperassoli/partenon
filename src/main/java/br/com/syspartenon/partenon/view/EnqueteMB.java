@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
+import org.primefaces.model.chart.PieChartModel;
 
 @ViewController
 public class EnqueteMB {
@@ -147,6 +148,15 @@ public class EnqueteMB {
         calendar.setTime(inicioNovaEnquete);
         calendar.add(Calendar.DAY_OF_MONTH, 1);
         enquete.setEnqExpiracao(calendar.getTime());
+    }
+    
+    public PieChartModel getRespostasChartModel(){
+        if(enquete == null || enquete.getAlternativas().isEmpty())
+            return null;
+        PieChartModel model = new PieChartModel();
+        for (EnqueteAlternativa alternativa : enquete.getAlternativas())
+            model.set(alternativa.getEalDescricao(), alternativa.getEalRespostas());
+        return model;
     }
     
 }

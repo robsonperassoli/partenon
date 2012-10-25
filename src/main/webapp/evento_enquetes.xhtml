@@ -3,50 +3,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
 
     <ui:define name="body">
-        <script type="text/javascript">
-         var piechartStyle = {
-                 padding:20,
-                 legend: {
-                         display:"right"
-                         ,spacing:10
-                 }
-         };
-        </script>
-        <h:form id="frm">
-            
-            <p:dialog header="Alternativas" widgetVar="dlgAlternativas" width="500">
-                <h:panelGroup id="dlgAlternativasDisplay">
-                    <h:outputLabel value="Descrição" for="descAlt" />
-                    <p:inputText value="#{enqueteMB.novaAlternativa.ealDescricao}" id="descAlt" size="60"/>
-                    <p:commandButton value="Salvar" image="ui-icon ui-icon-check" 
-                                     action="#{enqueteMB.salvarAlternativa()}"
-                                     update="dlgAlternativasDisplay,messages"/>
-                    <p:dataTable value="#{enqueteMB.alternativas}" var="alt" id="listAlternativas">
-                        <p:column  headerText="ID">
-                            <h:outputText value="#{alt.ealId}" />
-                        </p:column>
-                        <p:column  headerText="Descrição">
-                            <h:outputText value="#{alt.ealDescricao}" />
-                        </p:column>
-                        <p:column  headerText="Respostas">
-                            <h:outputText value="#{alt.ealRespostas}" />
-                        </p:column>
-                        <p:column>
-                            <p:commandButton image="ui-icon ui-icon-pencil" update=":frm:dlgAlternativasDisplay,messages">
-                                <f:setPropertyActionListener target="#{enqueteMB.novaAlternativa}" value="#{alt}" />
-                            </p:commandButton>
-                            <p:commandButton image="ui-icon ui-icon-close" update=":frm:dlgAlternativasDisplay,messages"
-                                             action="#{enqueteMB.excluirAlternativa()}">
-                                <f:setPropertyActionListener target="#{enqueteMB.novaAlternativa}" value="#{alt}" />
-                            </p:commandButton>
-                        </p:column>
-                    </p:dataTable>
-                    <p:pieChart id="graficoRespostas" value="#{enqueteMB.alternativas}" var="alternativa" 
-                                categoryField="#{alternativa.ealDescricao}" 
-                                dataField="#{alternativa.ealRespostas}"  
-                                style="piechartStyle"/>
-                </h:panelGroup>
-            </p:dialog>
+        <h:form id="frm" prependId="false">
             <p:dialog header="Nova Enquete" widgetVar="dlgNovaEnquete" width="500">
                 <h:panelGrid columns="2" id="dlgNovaEnqueteDisplay">
                     <h:outputLabel value="ID" for="id" />
@@ -66,8 +23,43 @@
                     <p:commandButton value="Salvar" image="ui-icon ui-icon-check" 
                                      action="#{enqueteMB.salvar()}"
                                      oncomplete="dlgNovaEnquete.hide()"
-                                     update=":frm,messages"/>
+                                     update=":frm"/>
                 </h:panelGrid>
+            </p:dialog>
+            <p:dialog header="Alternativas" widgetVar="dlgAlternativas" width="500"
+                      dynamic="true">
+                <h:panelGroup id="dlgAlternativasDisplay">
+                    <h:outputLabel value="Descrição" for="descAlt" />
+                    <p:inputText value="#{enqueteMB.novaAlternativa.ealDescricao}" id="descAlt" size="60"/>
+                    <p:commandButton value="Salvar" image="ui-icon ui-icon-check" 
+                                     action="#{enqueteMB.salvarAlternativa()}"
+                                     update=":frm:dlgAlternativasDisplay"/>
+                    <p:dataTable value="#{enqueteMB.alternativas}" var="alt" id="listAlternativas">
+                        <p:column  headerText="ID">
+                            <h:outputText value="#{alt.ealId}" />
+                        </p:column>
+                        <p:column  headerText="Descrição">
+                            <h:outputText value="#{alt.ealDescricao}" />
+                        </p:column>
+                        <p:column  headerText="Respostas">
+                            <h:outputText value="#{alt.ealRespostas}" />
+                        </p:column>
+                        <p:column>
+                            <p:commandButton image="ui-icon ui-icon-pencil" update=":frm:dlgAlternativasDisplay">
+                                <f:setPropertyActionListener target="#{enqueteMB.novaAlternativa}" value="#{alt}" />
+                            </p:commandButton>
+                            <p:commandButton image="ui-icon ui-icon-close" update=":frm:dlgAlternativasDisplay"
+                                             action="#{enqueteMB.excluirAlternativa()}">
+                                <f:setPropertyActionListener target="#{enqueteMB.novaAlternativa}" value="#{alt}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                    <p:pieChart id="graficoRespostas" 
+                                value="#{enqueteMB.respostasChartModel}" 
+                                legendPosition="w"  
+                                title="Enquete" 
+                                style="width:400px;height:300px"/> 
+                </h:panelGroup>
             </p:dialog>
             <h:panelGrid columns="2" style="width: 100%;" columnClasses="sidebar-modulo,conteudo-modulo">
                 <ui:include src="menu_evento.xhtml" />
@@ -77,8 +69,11 @@
                         <p:toolbarGroup>
                             <p:commandButton action="/evento_listar.jsf?faces-redirect=true" image="ui-icon ui-icon-arrowthick-1-w" value="Voltar" />
                             <p:commandButton action="/evento_dados_gerais.jsf?faces-redirect=true" image="ui-icon ui-icon-plusthick" value="Novo Evento" />
-                            <p:commandButton value="Nova Enquete" action="#{enqueteMB.novaEnquete()}" oncomplete="dlgNovaEnquete.show();" 
-                                             image="ui-icon ui-icon-plusthick" update=":frm:dlgNovaEnqueteDisplay" />
+                            <p:commandButton value="Nova Enquete" 
+                                             action="#{enqueteMB.novaEnquete()}" 
+                                             oncomplete="dlgNovaEnquete.show();" 
+                                             image="ui-icon ui-icon-plusthick" 
+                                             update=":frm:dlgNovaEnqueteDisplay" />
                         </p:toolbarGroup>
                     </p:toolbar>
 
@@ -104,20 +99,20 @@
                             </p:column>
                             <p:column>
                                 <p:commandButton image="ui-icon ui-icon-minusthick" action="#{enqueteMB.excluir()}" 
-                                                 update="frm,messages"
+                                                 update=":frm"
                                                  title="Remover Enquete">
                                     <f:setPropertyActionListener target="#{enqueteMB.enquete}" value="#{enquete}" />
                                 </p:commandButton>
-                                <p:commandButton image="ui-icon ui-icon-pencil" 
-                                                 update=":frm:dlgNovaEnqueteDisplay,messages"
+                                <p:commandButton icon="ui-icon ui-icon-pencil" 
+                                                 update=":frm:dlgNovaEnqueteDisplay"
                                                  oncomplete="dlgNovaEnquete.show();"
                                                  title="Editar Enquete">
                                     <f:setPropertyActionListener target="#{enqueteMB.enquete}" value="#{enquete}" />
                                 </p:commandButton>
-                                <p:commandButton image="ui-icon ui-icon-comment" 
+                                <p:commandButton icon="ui-icon ui-icon-comment" 
                                                  action="#{enqueteMB.addAlternativas()}"
-                                                 oncomplete="dlgAlternativas.show()"
-                                                 update=":frm:dlgAlternativasDisplay,messages"
+                                                 update=":frm:dlgAlternativasDisplay"
+                                                 oncomplete="dlgAlternativas.show();"
                                                  title="Alternativas">
                                     <f:setPropertyActionListener target="#{enqueteMB.enquete}" value="#{enquete}" />
                                 </p:commandButton>

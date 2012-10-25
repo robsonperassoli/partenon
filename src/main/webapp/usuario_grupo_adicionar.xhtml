@@ -3,21 +3,23 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
 
     <ui:define name="body">
-        <h:form id="frm">
+        <h:form id="frm" prependId="false">
             <p:toolbar>
                 <p:toolbarGroup>
                     <p:commandButton value="Voltar" action="/usuario_grupo_listar.jsf?faces-redirect=true" ajax="false" image="ui-icon ui-icon-arrowthick-1-w"/>
-                    <p:commandButton value="Salvar" action="#{usuarioGrupoMB.salvar()}" image="ui-icon ui-icon-disk" update="messages, frm"/>
-                    <p:button value="Adicionar Operações" image="ui-icon ui-icon-document" onclick="dlgOperacao.show(); return false;"/>
+                    <p:commandButton value="Salvar" action="#{usuarioGrupoMB.salvar()}" image="ui-icon ui-icon-disk" update=":frm"/>
+                    <p:commandButton value="Adicionar Operações" image="ui-icon ui-icon-document" onclick="dlgOperacao.show();"/>
                 </p:toolbarGroup>
             </p:toolbar>
             
             <p:dialog header="Operações do sistema" widgetVar="dlgOperacao">
                 <p:dataTable value="#{operacaoMB.list}" var="operacao"
                              selectionMode="single"
-                             rowSelectListener="#{usuarioGrupoMB.adicionaOperacao}"
-                             onRowSelectUpdate="frm"
-                             onRowSelectComplete="dlgOperacao.hide()">
+                             rowKey="#{operacao.opeId}">
+                    <p:ajax event="rowSelect" 
+                            listener="#{usuarioGrupoMB.adicionaOperacao}" 
+                            update=":frm:pnForm" 
+                            oncomplete="dlgOperacao.hide()"/>
                     <p:column headerText="ID">
                         <h:outputText value="#{operacao.opeId}" />
                     </p:column>
@@ -31,7 +33,7 @@
             </p:dialog>
                 
             
-            <p:panel header="Cadastro de Grupos de usuários">
+            <p:panel header="Cadastro de Grupos de usuários" id="pnForm">
                 <h:panelGrid columns="2">
                     <h:outputLabel value="ID" for="id"/>
                     <h:outputText value="#{usuarioGrupoMB.bean.usgId}" id="id" />
