@@ -1,4 +1,3 @@
-Partenon - Gest„o Integrada de Eventos  
+Partenon - Gest√£o Integrada de Eventos  
  
-
-Para mais detalhes acesse: http://robsonperassoli.github.com/partenon/
+Para mais detalhes acesse: http://robsonperassoli.com.br/partenon-sistema-opensource-para-gestao-de-eventos/
